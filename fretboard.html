@@ -368,6 +368,12 @@
     }
 </style>
 
+  <!-- Logout button, right-aligned, after header/nav -->
+  <div style="text-align: right; padding: 10px 20px;">
+    <button onclick="netlifyIdentity.logout()" style="padding: 8px 14px; font-size: 1rem; background-color: #FF4C4C; color: white; border: none; border-radius: 6px; cursor: pointer;">
+      Log Out
+    </button>
+  </div>
   <div class="container">
   <!-- 🎸 Guitar Tool Interface -->
   <section id="guitar-tool" style="margin-top: 60px;">
@@ -876,5 +882,13 @@ document.addEventListener("DOMContentLoaded", () => {
   updateChordInfoDisplay();
 });
 </script>
+  <!-- Netlify Identity Widget & logout redirect -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    netlifyIdentity.on("logout", () => {
+      window.location.href = "/"; // Redirect to home page after logout
+    });
+    netlifyIdentity.init();
+  </script>
 </body>
 </html>
