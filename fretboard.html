@@ -430,11 +430,6 @@
       <div id="progression-steps" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 4px;"></div>
       <div id="scale-notes" style="font-weight: 600; font-size: 1rem;"></div>
       <div id="triad-notes" style="color: var(--truth); font-weight: bold; margin-top: 6px;"></div>
-      <div style="margin-top: 10px;">
-        <button id="refresh-fretboard" style="padding: 6px 14px; font-size: 0.95rem; background-color: #3B6CED; color: white; border: none; border-radius: 6px; cursor: pointer;">
-          🔁 Refresh Fretboard
-        </button>
-      </div>
     </div>
     <!-- 🎶 Chord label display above the fretboard -->
     <div id="chord-label-display" style="text-align: center; font-size: 1.2rem; font-weight: 600; color: var(--understanding); margin-bottom: 12px;"></div>
@@ -452,6 +447,14 @@
       </div> -->
       <div style="text-align: center; margin-top: 16px; margin-bottom: 8px; color: var(--text-muted); font-size: 0.95rem;">
         Select tuning for each string below (left dropdowns).
+      </div>
+      <p style="text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-top: 20px; margin-bottom: 4px;">
+        If you change the tuning of any string, click the refresh button below to update the note highlights for your selected chord.
+      </p>
+      <div style="text-align: center; margin-bottom: 12px;">
+        <button id="refresh-fretboard" style="padding: 6px 14px; font-size: 0.95rem; background-color: #3B6CED; color: white; border: none; border-radius: 6px; cursor: pointer;">
+          🔁 Refresh Fretboard
+        </button>
       </div>
       <div id="fretboard-wrapper">
         <div id="fretboard"></div>
