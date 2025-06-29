@@ -896,6 +896,14 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "/"; // Redirect to home page after logout
     });
     netlifyIdentity.init();
+    // Reinitialize the identity widget after logout in case user returns
+    netlifyIdentity.on("init", user => {
+      if (!user) {
+        netlifyIdentity.on("login", () => {
+          document.location.href = "/fretboard.html";
+        });
+      }
+    });
   </script>
 </body>
 </html>
