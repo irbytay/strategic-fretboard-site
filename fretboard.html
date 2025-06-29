@@ -425,7 +425,7 @@
 
     <!-- 🎼 Chord/Scale Display Section -->
     <div id="chord-display-area" style="margin-bottom: 20px; text-align: center; color: var(--text);">
-      <h3 style="color: var(--heading); margin-bottom: 8px;">🎼 Selected Chord Information</h3>
+      <h3 id="chord-heading" style="color: var(--heading); margin-bottom: 8px;"></h3>
       <div id="chord-info" style="font-size: 1rem; margin-bottom: 4px;"></div>
       <div id="progression-steps" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 4px;"></div>
       <div id="scale-notes" style="font-weight: 600; font-size: 1rem;"></div>
@@ -812,10 +812,14 @@ function updateChordInfoDisplay() {
   const progression = document.getElementById("custom-progression-select").value;
   // Update the chord label display block above the fretboard
   document.getElementById("chord-label-display").textContent = `${root} ${progression}`;
+  // Update the heading dynamically
+  document.getElementById("chord-heading").textContent = `🎼 ${root} ${progression}`;
   const intervals = PROGRESSION_LIBRARY[progression];
   const notes = buildScale(root, progression);
 
-  document.getElementById("chord-info").textContent = `Chord: ${root} | Progression: ${progression}`;
+  // Removed redundant line:
+  // document.getElementById("chord-info").textContent = `Chord: ${root} | Progression: ${progression}`;
+  document.getElementById("chord-info").textContent = "";
   document.getElementById("progression-steps").textContent = `Steps: ${intervals ? intervals.join(' - ') : 'N/A'}`;
   document.getElementById("scale-notes").textContent = `Notes: ${notes.join('  ')}`;
 
