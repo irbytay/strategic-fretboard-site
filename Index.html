@@ -96,16 +96,28 @@
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/members.html";
+    netlifyIdentity.on("init", user => {
+      if (user) {
+        const email = user.email;
+
+        fetch("/data/subscribers.json")
+          .then(res => res.json())
+          .then(data => {
+            const subscriber = data[email];
+            if (subscriber && subscriber.status === "active") {
+              document.getElementById("fretboard-link").style.display = "block";
+            } else {
+              document.getElementById("stripe-link").style.display = "block";
+            }
           });
-        }
-      });
-      window.netlifyIdentity.init();
-    }
+      }
+    });
+
+    netlifyIdentity.on("login", () => {
+      location.reload(); // re-trigger check on login
+    });
+
+    netlifyIdentity.init();
   </script>
 </head>
 <body>
@@ -116,11 +128,17 @@
   <p>Gain access to the full learning suite including interactive fretboard maps, custom scale builders, and more.</p>
 
   <div class="cta">
-    <a href="https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00">
-      <button>Unlock Full Access</button>
-    </a>
+    <div id="fretboard-link" style="display:none;">
+      <a href="/fretboard.html">
+        <button>Go to Fretboard</button>
+      </a>
+    </div>
+    <div id="stripe-link" style="display:none;">
+      <a href="https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00">
+        <button>Start Free Trial</button>
+      </a>
+    </div>
     <button onclick="netlifyIdentity.open()">Login / Sign Up</button>
-    <button onclick="netlifyIdentity.logout()">Log Out</button>
   </div>
 
   <img src="fret.png" alt="Fretboard Preview" class="image-preview" />
