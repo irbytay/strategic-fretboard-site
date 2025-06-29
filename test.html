@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strategic Fretboard | Explore & Unlock the Fretboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Chivo', sans-serif;
+      background: linear-gradient(to bottom right, #0D1B2A, #112240); 
+      color: #ffffff;
+      text-align: center;
+      padding: 2rem;
+    }
+    header {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #FFFFF0;
+    }
+    .tagline {
+      font-size: 1.6rem;
+      color: #ffffff;
+      font-weight: 500;
+      margin-bottom: 2rem;
+    }
+    p {
+      max-width: 700px;
+      margin: 1.5rem auto;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      color: #ffffff;
+    }
+    .cta {
+      margin: 2rem 0;
+    }
+    .cta button {
+      background-color: #28A745; /* Truth Green */
+      color: #ffffff;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 0 0.5rem;
+    }
+    .cta button:hover {
+      background-color: #218838;
+      transform: scale(1.03);
+    }
+    .image-placeholder {
+      width: 100%;
+      max-width: 600px;
+      height: 200px;
+      margin: 2rem auto;
+      background: repeating-linear-gradient(
+        90deg,
+        #444,
+        #444 10%,
+        #222 10%,
+        #222 20%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      border: 1px solid #666;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .image-preview {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin: 2rem auto;
+      border-radius: 8px;
+      border: 1px solid #666;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      display: block;
+      animation: fadeIn 1.2s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #7C8A9B;
+    }
+  </style>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    const enharmonicNotes = {
+      "C#": "Db",
+      "Db": "C#",
+      "D#": "Eb",
+      "Eb": "D#",
+      "F#": "Gb",
+      "Gb": "F#",
+      "G#": "Ab",
+      "Ab": "G#",
+      "A#": "Bb",
+      "Bb": "A#"
+    };
+
+    function getEnharmonic(note) {
+      return enharmonicNotes[note] || note;
+    }
+
+    function moveNote(note, semitoneChange) {
+      const chromaticScale = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+      const index = chromaticScale.indexOf(note);
+      if (index === -1) return note;
+
+      const newIndex = (index + semitoneChange + 12) % 12;
+      return chromaticScale[newIndex];
+    }
+
+    let isDescending = false;
+
+    function updateDirection() {
+      isDescending = document.getElementById("directionToggle").checked;
+    }
+
+    function moveNoteDirectional(note, semitoneChange) {
+      if (isDescending) semitoneChange *= -1;
+      return moveNote(note, semitoneChange);
+    }
+
+    netlifyIdentity.on("init", user => {
+      console.log("Init triggered. User:", user);
+      if (user && user.email) {
+        const email = user.email;
+
+        fetch("/data/subscribers.json")
+          .then(res => {
+            if (!res.ok) throw new Error("subscribers.json not found");
+            return res.json();
+          })
+          .then(data => {
+            console.log("Subscribers data:", data);
+            const subscriber = data[email];
+            if (subscriber && subscriber.status === "active") {
+              document.getElementById("fretboard-link").style.display = "block";
+            } else {
+              document.getElementById("stripe-link").style.display = "block";
+            }
+          })
+          .catch(err => {
+            console.error("Error checking subscription:", err);
+            document.getElementById("stripe-link").style.display = "block"; // fallback
+          });
+      }
+    });
+
+    netlifyIdentity.on("login", () => {
+      console.log("Login event triggered");
+      window.location.href = "/home.html"; // go to the Home page after login
+    });
+
+    netlifyIdentity.init();
+  </script>
+</head>
+<body>
+  <header>Strategic Fretboard</header>
+  <div class="tagline"><strong>Master the fretboard. Unlock your potential.</strong></div>
+
+  <p>Strategic Fretboard is your modern gateway to understanding chords, scales, and fretboard logic through powerful visual tools. Whether you're moving up or down the fretboard, you'll learn how sharps and flats guide musical direction and unlock creative exploration. Designed for students, teachers, and serious players.</p>
+  <p>Gain access to the full learning suite including interactive fretboard maps, custom scale builders, and more.</p>
+
+  <div class="cta">
+    <div id="fretboard-link" style="display:none;">
+      <a href="/fretboard.html">
+        <button>Go to Fretboard</button>
+      </a>
+    </div>
+    <div id="stripe-link" style="display:none;">
+      <a href="https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00">
+        <button>Start Free Trial</button>
+      </a>
+    </div>
+    <div style="margin-top: 1rem;">
+      <label style="font-size: 1rem;">
+        <input type="checkbox" id="directionToggle" onchange="updateDirection()" />
+        Descending Mode (Use Flats)
+      </label>
+    </div>
+    <button onclick="netlifyIdentity.open()">Login / Sign Up</button>
+  </div>
+
+  <img src="fret.png" alt="Fretboard Preview" class="image-preview" />
+
+  <footer>
+    &copy; 2025 Strategic Fretboard. All rights reserved.
+  </footer>
+</body>
+</html>
