@@ -428,6 +428,11 @@
       <div id="progression-steps" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 4px;"></div>
       <div id="scale-notes" style="font-weight: 600; font-size: 1rem;"></div>
       <div id="triad-notes" style="color: var(--truth); font-weight: bold; margin-top: 6px;"></div>
+      <div style="margin-top: 10px;">
+        <button id="refresh-fretboard" style="padding: 6px 14px; font-size: 0.95rem; background-color: #3B6CED; color: white; border: none; border-radius: 6px; cursor: pointer;">
+          🔁 Refresh Fretboard
+        </button>
+      </div>
     </div>
     <!-- 🎶 Chord label display above the fretboard -->
     <div id="chord-label-display" style="text-align: center; font-size: 1.2rem; font-weight: 600; color: var(--understanding); margin-bottom: 12px;"></div>
@@ -879,6 +884,8 @@ document.addEventListener("DOMContentLoaded", () => {
   generateFretboard(defaultTuning);
   document.getElementById("custom-chord-select").addEventListener("change", updateChordInfoDisplay);
   document.getElementById("custom-progression-select").addEventListener("change", updateChordInfoDisplay);
+  // Add refresh button event listener
+  document.getElementById("refresh-fretboard").addEventListener("click", updateChordInfoDisplay);
   updateChordInfoDisplay();
 });
 </script>
