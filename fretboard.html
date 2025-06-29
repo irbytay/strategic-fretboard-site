@@ -837,21 +837,13 @@ function updateChordInfoDisplay() {
     { bg: "rgba(255, 105, 180, 0.35)", color: "#fff0f8" }     // 7th
   ];
 
-  try {
-    const triadHTML = chordTones
-      .filter(note => typeof note === "string" && note.trim() !== "")
-      .map((note, i) => {
-        const label = toneLabels[i] || `Tone ${i + 1}`;
-        const color = roleColors[i] || roleColors[0];
-        const style = `display:inline-block; background-color:${color.bg}; color:${color.color}; padding:2px 6px; border-radius:4px; margin-right:6px; font-size:0.95rem;`;
-        return `<span style="${style}">${note} (${label})</span>`;
-      }).join(" ");
+  const triadHTML = chordTones.map((note, i) => {
+    const label = toneLabels[i] || `Tone ${i+1}`;
+    const style = `display:inline-block; background-color:${roleColors[i]?.bg}; color:${roleColors[i]?.color}; padding:2px 6px; border-radius:4px; margin-right:6px; font-size:0.95rem;`;
+    return `<span style="${style}">${note} (${label})</span>`;
+  }).join(" ");
 
-    document.getElementById("triad-notes").innerHTML = `Chord Formula: ${triadHTML}`;
-  } catch (err) {
-    console.error("Error displaying chord tone labels:", err);
-    document.getElementById("triad-notes").textContent = "Chord Formula: (error displaying chord tones)";
-  }
+  document.getElementById("triad-notes").innerHTML = `Chord Formula: ${triadHTML}`;
 
   // --- Chord diagram using hardcoded lookup ---
   const diagramText = generateChordDiagram(chordTones, root, progression);
