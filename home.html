@@ -207,9 +207,7 @@
       </a>
     </div>
     <div id="stripe-link" style="display:none;">
-      <a href="https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00">
-        <button>Start Free Trial</button>
-      </a>
+      <button onclick="startStripeCheckout()">Start Free Trial</button>
     </div>
     <button onclick="netlifyIdentity.logout()" class="cta-button" style="margin-top: 1rem;">Log Out</button>
   </div>
@@ -219,5 +217,22 @@
   <footer>
     &copy; 2025 Strategic Fretboard. All rights reserved.
   </footer>
+  <script>
+    async function startStripeCheckout() {
+      try {
+        const response = await fetch('/.netlify/functions/createCheckoutSession');
+        const data = await response.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Failed to create Stripe session.');
+          console.error(data);
+        }
+      } catch (err) {
+        console.error('Error starting Stripe checkout:', err);
+        alert('Could not initiate checkout. Try again later.');
+      }
+    }
+  </script>
 </body>
 </html>
