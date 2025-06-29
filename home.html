@@ -140,36 +140,6 @@
   </script>
 </head>
 <body>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    netlifyIdentity.init();
-
-    netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.location.href = "/index.html";
-        return;
-      }
-
-      const email = user.email;
-
-      fetch("/data/subscribers.json")
-        .then(res => {
-          if (!res.ok) throw new Error("subscribers.json not found");
-          return res.json();
-        })
-        .then(data => {
-          const subscriber = data[email];
-          if (!subscriber || subscriber.status !== "active") {
-            window.location.href = "/home.html"; // not allowed
-          }
-        })
-        .catch(() => {
-          window.location.href = "/home.html";
-        });
-    });
-  });
-</script>
   <header>Home</header>
   <div class="tagline"><strong>Master the fretboard. Unlock your potential.</strong></div>
 
