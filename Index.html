@@ -9,7 +9,7 @@
     body {
       margin: 0;
       font-family: 'Chivo', sans-serif;
-      background: linear-gradient(to bottom right, #0D1B2A, #112240);
+      background: linear-gradient(to bottom right, #0D1B2A, #112240); 
       color: #ffffff;
       text-align: center;
       padding: 2rem;
@@ -124,7 +124,7 @@
 
     netlifyIdentity.on("login", () => {
       console.log("Login event triggered");
-      location.reload(); // re-trigger check on login
+      window.location.href = "/home.html"; // go to the Home page after login
     });
 
     netlifyIdentity.init();
