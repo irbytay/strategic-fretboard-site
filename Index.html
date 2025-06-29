@@ -97,23 +97,33 @@
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     netlifyIdentity.on("init", user => {
-      if (user) {
+      console.log("Init triggered. User:", user);
+      if (user && user.email) {
         const email = user.email;
 
         fetch("/data/subscribers.json")
-          .then(res => res.json())
+          .then(res => {
+            if (!res.ok) throw new Error("subscribers.json not found");
+            return res.json();
+          })
           .then(data => {
+            console.log("Subscribers data:", data);
             const subscriber = data[email];
             if (subscriber && subscriber.status === "active") {
               document.getElementById("fretboard-link").style.display = "block";
             } else {
               document.getElementById("stripe-link").style.display = "block";
             }
+          })
+          .catch(err => {
+            console.error("Error checking subscription:", err);
+            document.getElementById("stripe-link").style.display = "block"; // fallback
           });
       }
     });
 
     netlifyIdentity.on("login", () => {
+      console.log("Login event triggered");
       location.reload(); // re-trigger check on login
     });
 
