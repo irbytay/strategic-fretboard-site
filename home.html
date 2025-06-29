@@ -196,10 +196,54 @@
   <footer>
     &copy; 2025 Strategic Fretboard. All rights reserved.
   </footer>
+</footer>
   <script>
     function startStripeCheckout() {
       window.location.href = "https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00";
     }
+
+    // Optional: Handle URL parameters after Stripe redirects back
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get("session_id");
+
+      if (sessionId) {
+        console.log("🔁 Stripe Checkout session ID returned:", sessionId);
+
+        netlifyIdentity.on("init", user => {
+          if (!user) {
+            console.warn("User not logged in, skipping Supabase update.");
+            return;
+          }
+
+          const email = user.email;
+
+          // Update Supabase with new subscriber info after checkout
+          fetch("https://gopyzkcmvkbusdnwjlbb.supabase.co/rest/v1/subscribers", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8",
+              Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8"
+            },
+            body: JSON.stringify({
+              email: email,
+              status: "active",
+              type: "trial"
+            })
+          })
+          .then(res => {
+            if (!res.ok) throw new Error("Supabase insert failed");
+            console.log("✅ Subscription info written to Supabase");
+          })
+          .catch(err => {
+            console.error("❌ Failed to write subscriber:", err);
+          });
+        });
+
+        netlifyIdentity.init();
+      }
+    });
   </script>
 </body>
 </html>
