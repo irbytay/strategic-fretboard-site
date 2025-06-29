@@ -448,14 +448,6 @@
       <div style="text-align: center; margin-top: 16px; margin-bottom: 8px; color: var(--text-muted); font-size: 0.95rem;">
         Select tuning for each string below (left dropdowns).
       </div>
-      <p style="text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-top: 20px; margin-bottom: 4px;">
-        If you change the tuning of any string, click the refresh button below to update the note highlights for your selected chord.
-      </p>
-      <div style="text-align: center; margin-bottom: 12px;">
-        <button id="refresh-fretboard" style="padding: 6px 14px; font-size: 0.95rem; background-color: #3B6CED; color: white; border: none; border-radius: 6px; cursor: pointer;">
-          🔁 Refresh Fretboard
-        </button>
-      </div>
       <div id="fretboard-wrapper">
         <div id="fretboard"></div>
       </div>
@@ -901,8 +893,6 @@ document.addEventListener("DOMContentLoaded", () => {
   generateFretboard(defaultTuning);
   document.getElementById("custom-chord-select").addEventListener("change", updateChordInfoDisplay);
   document.getElementById("custom-progression-select").addEventListener("change", updateChordInfoDisplay);
-  // Add refresh button event listener
-  document.getElementById("refresh-fretboard").addEventListener("click", updateChordInfoDisplay);
   updateChordInfoDisplay();
 });
 </script>
