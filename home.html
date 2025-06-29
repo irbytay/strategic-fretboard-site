@@ -163,14 +163,20 @@
         const email = user.email;
         console.log("Logged in as:", user.email);
 
-        fetch("/data/subscribers.json")
+        // Fetch subscriber data from Supabase
+        fetch("https://gopyzkcmvkbusdmwjbb.supabase.co/rest/v1/subscribers?email=eq:" + email, {
+          headers: {
+            apikey: "YOUR_SUPABASE_ANON_KEY",
+            Authorization: "Bearer YOUR_SUPABASE_ANON_KEY"
+          }
+        })
           .then(res => {
-            if (!res.ok) throw new Error("subscribers.json not found");
+            if (!res.ok) throw new Error("Supabase query failed");
             return res.json();
           })
           .then(data => {
-            console.log("Subscribers data:", data);
-            const subscriber = data[email];
+            console.log("Supabase subscriber query result:", data);
+            const subscriber = data[0];
             console.log("🔍 Checking subscriber object for:", email);
             if (!subscriber) {
               console.warn("⚠️ No subscriber data found for this email.");
