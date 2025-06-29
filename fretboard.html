@@ -429,7 +429,7 @@
       <div id="chord-info" style="font-size: 1rem; margin-bottom: 4px;"></div>
       <div id="progression-steps" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 4px;"></div>
       <div id="scale-notes" style="font-weight: 600; font-size: 1rem;"></div>
-      <div id="triad-notes" style="color: var(--truth); font-weight: bold; margin-top: 6px;"></div>
+      <div id="triad-notes" style="font-weight: bold; margin-top: 6px;"></div>
     </div>
     <!-- 🎶 Chord label display above the fretboard -->
     <div id="chord-label-display" style="text-align: center; font-size: 1.2rem; font-weight: 600; color: var(--understanding); margin-bottom: 12px;"></div>
@@ -829,7 +829,18 @@ function updateChordInfoDisplay() {
     }
   }
   const chordTones = getChordTones(notes, type);
-  document.getElementById("triad-notes").textContent = `Chord Tones: ${chordTones.join("  ")}`;
+  // Use roleColors for color-coded span wrapping
+  const roleColors = [
+    { bg: "rgba(40, 167, 69, 0.4)", color: "#cde7d0" },       // Root
+    { bg: "rgba(212, 175, 55, 0.35)", color: "#fff5d0" },     // 3rd
+    { bg: "rgba(59, 108, 237, 0.35)", color: "#dbe3ff" },     // 5th
+    { bg: "rgba(255, 105, 180, 0.35)", color: "#fff0f8" }     // 7th (if exists)
+  ];
+  const coloredTonesHTML = chordTones.map((tone, index) => {
+    const role = roleColors[index] || roleColors[0];
+    return `<span style="color: ${role.color}; background-color: ${role.bg}; padding: 2px 6px; border-radius: 4px; margin: 0 4px;">${tone}</span>`;
+  }).join("");
+  document.getElementById("triad-notes").innerHTML = `Chord Tones: ${coloredTonesHTML}`;
 
   // --- Chord diagram using hardcoded lookup ---
   const diagramText = generateChordDiagram(chordTones, root, progression);
@@ -845,13 +856,6 @@ function updateChordInfoDisplay() {
     };
     return enharmonics[note] || note.replace(/♯/g, '#').replace(/♭/g, 'b');
   };
-  const roleColors = [
-    { bg: "rgba(40, 167, 69, 0.4)", color: "#cde7d0" },       // Root
-    { bg: "rgba(212, 175, 55, 0.35)", color: "#fff5d0" },     // 3rd
-    { bg: "rgba(59, 108, 237, 0.35)", color: "#dbe3ff" },     // 5th
-    { bg: "rgba(255, 105, 180, 0.35)", color: "#fff0f8" }     // 7th (if exists)
-  ];
-
   const normalizedChordTones = chordTones.map(normalize);
 
   fretboardCells.forEach(cell => {
