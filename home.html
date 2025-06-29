@@ -197,20 +197,8 @@
     &copy; 2025 Strategic Fretboard. All rights reserved.
   </footer>
   <script>
-    async function startStripeCheckout() {
-      try {
-        const response = await fetch('/.netlify/functions/createCheckoutSession');
-        const data = await response.json();
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          alert('Failed to create Stripe session.');
-          console.error(data);
-        }
-      } catch (err) {
-        console.error('Error starting Stripe checkout:', err);
-        alert('Could not initiate checkout. Try again later.');
-      }
+    function startStripeCheckout() {
+      window.location.href = "https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00";
     }
   </script>
 </body>
