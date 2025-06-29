@@ -8,7 +8,7 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #3B6CED;
+      background: linear-gradient(to bottom right, #3B6CED, #2A4DBE);
       color: #ffffff;
       text-align: center;
       padding: 2rem;
@@ -18,9 +18,16 @@
       margin-bottom: 0.5rem;
     }
     .tagline {
-      font-size: 1.4rem;
-      color: #aaa;
+      font-size: 1.6rem;
+      color: #ffffff;
+      font-weight: 500;
       margin-bottom: 2rem;
+    }
+    p {
+      max-width: 700px;
+      margin: 1.5rem auto;
+      line-height: 1.6;
+      font-size: 1.1rem;
     }
     .cta {
       margin: 2rem 0;
@@ -29,10 +36,16 @@
       background-color: #ffffff;
       color: #3B6CED;
       border: none;
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .cta button:hover {
+      background-color: #e4e4e4;
+      transform: scale(1.03);
     }
     .image-placeholder {
       width: 100%;
@@ -64,11 +77,16 @@
       border: 1px solid #666;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
       display: block;
+      animation: fadeIn 1.2s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     footer {
       margin-top: 4rem;
       font-size: 0.9rem;
-      color: #666;
+      color: #ccc;
     }
   </style>
 </head>
