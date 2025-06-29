@@ -96,37 +96,44 @@
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
-    netlifyIdentity.init();
+    // Show a loading message while validating
+    document.addEventListener("DOMContentLoaded", () => {
+      const fretLink = document.getElementById("fretboard-link");
+      const stripeLink = document.getElementById("stripe-link");
 
-    // Redirect to landing page if not logged in
-    if (!netlifyIdentity.currentUser()) {
-      window.location.href = "/";
-    }
+      fretLink.style.display = "none";
+      stripeLink.style.display = "none";
 
-    const user = netlifyIdentity.currentUser();
+      netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.location.href = "/";
+          return;
+        }
 
-    if (user && user.email) {
-      const email = user.email;
+        const email = user.email;
 
-      fetch("/data/subscribers.json")
-        .then(res => {
-          if (!res.ok) throw new Error("subscribers.json not found");
-          return res.json();
-        })
-        .then(data => {
-          console.log("Subscribers data:", data);
-          const subscriber = data[email];
-          if (subscriber && subscriber.status === "active") {
-            document.getElementById("fretboard-link").style.display = "block";
-          } else {
-            document.getElementById("stripe-link").style.display = "block";
-          }
-        })
-        .catch(err => {
-          console.error("Error checking subscription:", err);
-          document.getElementById("stripe-link").style.display = "block"; // fallback
-        });
-    }
+        fetch("/data/subscribers.json")
+          .then(res => {
+            if (!res.ok) throw new Error("subscribers.json not found");
+            return res.json();
+          })
+          .then(data => {
+            console.log("Subscribers data:", data);
+            const subscriber = data[email];
+            if (subscriber && subscriber.status === "active") {
+              fretLink.style.display = "block";
+            } else {
+              stripeLink.style.display = "block";
+            }
+          })
+          .catch(err => {
+            console.error("Error checking subscription:", err);
+            stripeLink.style.display = "block"; // fallback
+          });
+      });
+
+      netlifyIdentity.init();
+    });
   </script>
 </head>
 <body>
