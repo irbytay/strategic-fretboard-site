@@ -829,22 +829,7 @@ function updateChordInfoDisplay() {
     }
   }
   const chordTones = getChordTones(notes, type);
-  // Color-coded role labels for chord tones
-  const toneLabels = ["Root", "3rd", "5th", "7th"];
-  const roleColors = [
-    { bg: "rgba(40, 167, 69, 0.4)", color: "#cde7d0" },
-    { bg: "rgba(212, 175, 55, 0.35)", color: "#fff5d0" },
-    { bg: "rgba(59, 108, 237, 0.35)", color: "#dbe3ff" },
-    { bg: "rgba(255, 105, 180, 0.35)", color: "#fff0f8" }
-  ];
-
-  const triadDisplay = chordTones.map((note, i) => {
-    const label = toneLabels[i] || `Tone ${i+1}`;
-    const style = `background-color:${roleColors[i]?.bg}; color:${roleColors[i]?.color}; padding:2px 6px; border-radius:4px; margin-right:6px;`;
-    return `<span style="${style}">${note} (${label})</span>`;
-  }).join(" ");
-
-  document.getElementById("triad-notes").innerHTML = `Chord Formula: ${triadDisplay}`;
+  document.getElementById("triad-notes").textContent = `Chord Tones: ${chordTones.join("  ")}`;
 
   // --- Chord diagram using hardcoded lookup ---
   const diagramText = generateChordDiagram(chordTones, root, progression);
