@@ -14,20 +14,6 @@
       text-align: center;
       padding: 2rem;
     }
-  </style>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/members.html";
-          });
-        }
-      });
-      window.netlifyIdentity.init();
-    }
-  </script>
     header {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 2rem;
@@ -60,6 +46,7 @@
       cursor: pointer;
       border-radius: 8px;
       transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 0 0.5rem;
     }
     .cta button:hover {
       background-color: #218838;
@@ -107,6 +94,19 @@
       color: #7C8A9B;
     }
   </style>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/members.html";
+          });
+        }
+      });
+      window.netlifyIdentity.init();
+    }
+  </script>
 </head>
 <body>
   <header>Strategic Fretboard</header>
@@ -119,6 +119,8 @@
     <a href="https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00">
       <button>Unlock Full Access</button>
     </a>
+    <button onclick="netlifyIdentity.open()">Login / Sign Up</button>
+    <button onclick="netlifyIdentity.logout()">Log Out</button>
   </div>
 
   <img src="fret.png" alt="Fretboard Preview" class="image-preview" />
@@ -127,8 +129,4 @@
     &copy; 2025 Strategic Fretboard. All rights reserved.
   </footer>
 </body>
-<div class="cta">
-  <button onclick="netlifyIdentity.open()">Login / Sign Up</button>
-  <button onclick="netlifyIdentity.logout()">Log Out</button>
-</div>
 </html>
