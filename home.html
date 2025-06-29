@@ -163,9 +163,20 @@
           .then(data => {
             console.log("Subscribers data:", data);
             const subscriber = data[email];
-            if (subscriber && subscriber.status === "active") {
+            console.log("🔍 Checking subscriber object for:", email);
+            if (!subscriber) {
+              console.warn("⚠️ No subscriber data found for this email.");
+              stripeLink.style.display = "block";
+            } else if (subscriber.status === "active") {
+              console.log("✅ Subscription is active for:", email);
+              if (subscriber.type === "trial") {
+                console.log("🟡 User is on free trial.");
+              } else if (subscriber.type === "paid") {
+                console.log("🟢 User is a full subscriber.");
+              }
               fretLink.style.display = "block";
             } else {
+              console.warn("⚠️ Subscriber found but status is not active:", subscriber.status);
               stripeLink.style.display = "block";
             }
           })
