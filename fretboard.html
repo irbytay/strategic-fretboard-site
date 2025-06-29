@@ -773,6 +773,7 @@ function generateFretboard(tuning = defaultTuning) {
           cell.appendChild(dot);
         }
       }
+      updateChordInfoDisplay();
     });
     fretboardDiv.appendChild(select);
 
@@ -862,8 +863,8 @@ function updateChordInfoDisplay() {
   const normalizedChordTones = chordTones.map(normalize);
 
   fretboardCells.forEach(cell => {
-    const note = cell.textContent?.trim();
-    if (!note || !ALL_NOTES.includes(normalize(note))) return;
+    const note = cell.childNodes[0]?.nodeValue?.trim();
+    if (!note) return;
     const normalizedNote = normalize(note);
     const idx = normalizedChordTones.indexOf(normalizedNote);
 
