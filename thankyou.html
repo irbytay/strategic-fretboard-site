@@ -219,8 +219,10 @@
                     window.location.href = "/home.html";
                   }, 3000);
                 } else {
-                  document.getElementById("error-message").textContent = "❌ Unable to finalize your subscription.";
-                  document.getElementById("error-message").style.display = "block";
+                  console.warn("❌ Upsert failed — redirecting anyway.");
+                  setTimeout(() => {
+                    window.location.href = "/home.html";
+                  }, 3000);
                 }
               })
               .catch(err => {
