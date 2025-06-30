@@ -174,13 +174,14 @@
   <header>Thank You</header>
   <div class="tagline"><strong>🎉 Thank you for subscribing!</strong></div>
   <p>
-    Thank you for supporting the Strategic Fretboard. This is a true grassroots project — run entirely by me, a single individual working to build something valuable for guitarists everywhere. 
-    To activate your access, please send me a quick email with your name, the email you used at checkout, and a screenshot or copy of your receipt or confirmation. I’ll manually get you set up as soon as I can.
-    <br /><br />
-    📧 Email: <strong>strategicfretboard@gmail.com</strong>
-    <br /><br />
-    I deeply appreciate your patience and support as I grow this project.
-  </p>
+  Welcome to the Strategic Fretboard — and thank you for stepping into something truly different. This project isn’t a company or a content farm — it’s a one-person mission to build the most intuitive, empowering guitar tool on the internet.
+  <br /><br />
+  If you just made a purchase, I’m personally verifying all new subscriptions. Please forward your receipt or confirmation, along with your name and the email you used at checkout, to the address below. I’ll unlock your access as quickly as I can.
+  <br /><br />
+  📧 Email: <strong>team@strategicfretboard.com</strong>
+  <br /><br />
+  Thanks for your patience — and your belief in this grassroots, gold-standard vision.
+</p>
   <div id="error-message" style="display:none; color:#ff4d4d; font-weight:bold; margin-bottom:1rem;"></div>
 
   <footer>
@@ -224,12 +225,12 @@
                   document.querySelector("p").textContent = "✅ Thank you! Please give us a moment while we redirect you to your content...";
                   setTimeout(() => {
                     window.location.href = "/home.html";
-                  }, 3000);
+                  }, 5000);
                 } else {
                   console.warn("❌ Upsert failed — redirecting anyway.");
                   setTimeout(() => {
                     window.location.href = "/home.html";
-                  }, 3000);
+                  }, 5000);
                 }
               })
               .catch(err => {
