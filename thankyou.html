@@ -200,7 +200,7 @@
           .then(data => {
             if (data.length && data[0].status === "active") {
               console.log("✅ Existing subscriber active:", email);
-              window.location.href = "/dashboard";
+              window.location.href = "/fretboard.html";
             } else {
               // Not found or not active — insert or update via upsert
               fetch(`${baseUrl}?on_conflict=email`, {
@@ -211,7 +211,7 @@
               .then(res => {
                 if (res.ok) {
                   console.log("📝 Subscriber upserted");
-                  window.location.href = "/dashboard";
+                  window.location.href = "/fretboard.html";
                 } else {
                   document.getElementById("error-message").textContent = "❌ Unable to finalize your subscription.";
                   document.getElementById("error-message").style.display = "block";
