@@ -370,24 +370,19 @@
     </select>
   </label>
   <!-- Scale selection removed: Only Major scale is available -->
-  <label style="margin-bottom: 12px;">
-    <input type="checkbox" id="accidental-toggle" />
-    Descending Mode (Flats & Reverse Scale)
-  </label>
   <div class="help-icon-container">
   <div class="help-icon" tabindex="0">🦉</div>
   <div class="help-tooltip">
     <strong>How to Use:</strong><br>
     1. Select Root<br>
-    2. Toggle Descending Mode (flats)<br>
-    3. Tuning is fixed (Standard EADGBE)<br>
-    4. Only Major scales are shown<br>
-    5. Notes highlight as:<br>
+    2. Tuning is fixed (Standard EADGBE)<br>
+    3. Only Major scales are shown<br>
+    4. Notes highlight as:<br>
     &nbsp;&nbsp;&nbsp;• <span style="color:#2e7031;">R</span> = Root<br>
     &nbsp;&nbsp;&nbsp;• <span style="color:#3e4c75;">M3/m3</span> = Major/Minor 3rd<br>
     &nbsp;&nbsp;&nbsp;• <span style="color:#704c2e;">P5</span> = Perfect 5th<br>
     &nbsp;&nbsp;&nbsp;• <span style="color:#553770;">M7/m7</span> = Major/Minor 7th<br>
-    6. Click “Reset Fretboard” to start fresh
+    5. Click “Reset Fretboard” to start fresh
   </div>
 </div>
   <div id="step-info" style="margin: 12px 0 6px; font-size: 0.9rem; color: #fff;"></div>
@@ -428,119 +423,28 @@
 
     // Chord shapes dictionary (root + type as key)
     const CHORD_SHAPES = {
-      "A Major": {
-        e: "---0--- (E)",
-        B: "---2--- (C#/Db)",
-        G: "---2--- (A)",
-        D: "---2--- (E)",
-        A: "---0--- (A)",
-        E: "---Muted"
-      },
-      "A Minor": {
-        e: "---0--- (E)",
-        B: "---1--- (C)",
-        G: "---2--- (A)",
-        D: "---2--- (E)",
-        A: "---0--- (A)",
-        E: "---Muted"
-      },
-      "B Major": {
-        e: "---2--- (F#/Gb)",
-        B: "---4--- (D#/Eb)",
-        G: "---4--- (B)",
-        D: "---4--- (F#/Gb)",
-        A: "---2--- (B)",
-        E: "---Muted"
-      },
-      "B Minor": {
-        e: "---2--- (F#/Gb)",
-        B: "---3--- (D)",
-        G: "---4--- (B)",
-        D: "---4--- (F#/Gb)",
-        A: "---2--- (B)",
-        E: "---Muted"
-      },
-      "C Major": {
-        e: "---0--- (E)",
-        B: "---1--- (C)",
-        G: "---0--- (G)",
-        D: "---2--- (E)",
-        A: "---3--- (C)",
-        E: "---Muted"
-      },
-      "C Minor": {
-        e: "---3--- (G)",
-        B: "---4--- (D#/Eb)",
-        G: "---5--- (C)",
-        D: "---5--- (G)",
-        A: "---3--- (C)",
-        E: "---Muted"
-      },
-      "D Major": {
-        e: "---2--- (F#/Gb)",
-        B: "---3--- (D)",
-        G: "---2--- (A)",
-        D: "---0--- (D)",
-        A: "---Muted",
-        E: "---Muted"
-      },
-      "D Minor": {
-        e: "---1--- (F)",
-        B: "---3--- (D)",
-        G: "---2--- (A)",
-        D: "---0--- (D)",
-        A: "---Muted",
-        E: "---Muted"
-      },
-      "E Major": {
-        e: "---0--- (E)",
-        B: "---0--- (B)",
-        G: "---1--- (G#/Ab)",
-        D: "---2--- (E)",
-        A: "---2--- (B)",
-        E: "---0--- (E)"
-      },
-      "E Minor": {
-        e: "---0--- (E)",
-        B: "---0--- (B)",
-        G: "---0--- (G)",
-        D: "---2--- (E)",
-        A: "---2--- (B)",
-        E: "---0--- (E)"
-      },
-      "F Major": {
-        e: "---1--- (F)",
-        B: "---1--- (C)",
-        G: "---2--- (A)",
-        D: "---3--- (F)",
-        A: "---3--- (C)",
-        E: "---1--- (F)"
-      },
-      "F Minor": {
-        e: "---1--- (F)",
-        B: "---1--- (C)",
-        G: "---1--- (G#/Ab)",
-        D: "---3--- (F)",
-        A: "---3--- (C)",
-        E: "---1--- (F)"
-      },
-      "G Major": {
-        e: "---3--- (G)",
-        B: "---3--- (D)",
-        G: "---0--- (G)",
-        D: "---0--- (D)",
-        A: "---2--- (B)",
-        E: "---3--- (G)"
-      },
-      "G Minor": {
-        e: "---3--- (G)",
-        B: "---3--- (D)",
-        G: "---3--- (G#/Ab)",
-        D: "---5--- (G)",
-        A: "---5--- (D)",
-        E: "---3--- (G)"
-      }
-    };
+  "A Major": {
+    e: "---0--- (E)",
+    B: "---2--- (C#/Db)",
+    G: "---2--- (A)",
+    D: "---2--- (E)",
+    A: "---0--- (A)",
+    E: "---Muted"
+  },
+  "A Minor": "A Minor",
+  "B Major": "B Major",
+  "B Minor": "B Minor",
+  "C Major": "C Major",
+  "C Minor": "C Minor",
+  "D Major": "D Major",
+  "D Minor": "D Minor",
+  "E Major": "E Major",
+  "E Minor": "E Minor",
+  "F Major": "F Major",
+  "F Minor": "F Minor",
+  "G Major": "G Major",
+  "G Minor": "G Minor"
+};
 
     function renderFretboard() {
       fretboardEl.innerHTML = "";
@@ -712,7 +616,7 @@ ${formatLine("E", shape.E)}
       }
     }
 
-    document.getElementById("accidental-toggle").addEventListener("change", renderFretboard);
+    // document.getElementById("accidental-toggle").addEventListener("change", renderFretboard);
     document.getElementById("root-select").addEventListener("change", renderFretboard);
 
     renderFretboard();
@@ -720,7 +624,7 @@ ${formatLine("E", shape.E)}
     // Add reset button functionality
     document.getElementById("reset-fretboard").addEventListener("click", () => {
       document.getElementById("root-select").selectedIndex = 0;
-      document.getElementById("accidental-toggle").checked = false;
+      // document.getElementById("accidental-toggle").checked = false;
       renderFretboard();
     });
   </script>
