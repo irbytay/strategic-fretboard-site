@@ -167,42 +167,7 @@
       netlifyIdentity.on("logout", () => {
         window.location.href = "/index.html";
       });
-    });
-  </script>
-</head>
-<body>
-  <header>Home</header>
-  <div class="tagline"><strong>Master the fretboard. Unlock your potential.</strong></div>
 
-  <p>Welcome to your Strategic Fretboard account.</p>
-  <p>If your subscription is active, you'll be granted access to the fretboard tool below. If not, you can begin a free trial to unlock it.</p>
-
-  <div id="error-message" style="display:none; color:#ff4d4d; font-weight:bold; margin-bottom:1rem;"></div>
-
-  <div class="cta">
-    <div id="fretboard-link" style="display:none;">
-      <a href="/fretboard.html">
-        <button>Go to Fretboard</button>
-      </a>
-    </div>
-    <div id="stripe-link" style="display:none;">
-      <button onclick="startStripeCheckout()">Start Free Trial</button>
-    </div>
-    <button onclick="netlifyIdentity.logout()" class="cta-button" style="margin-top: 1rem;">Log Out</button>
-  </div>
-
-  <img src="fret.png" alt="Fretboard Preview" class="image-preview" />
-
-  <footer>
-    &copy; 2025 Strategic Fretboard. All rights reserved.
-  </footer>
-</footer>
-  <script>
-    function startStripeCheckout() {
-      window.location.href = "https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00";
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
       const urlParams = new URLSearchParams(window.location.search);
       const sessionId = urlParams.get("session_id");
 
@@ -243,6 +208,7 @@
             console.log("✅ Supabase record inserted/updated");
 
             // Re-check subscription and update visibility
+            // Consolidated netlifyIdentity.on("init") logic here to avoid double initialization
             netlifyIdentity.on("init", user => {
               if (!user) return;
 
@@ -266,8 +232,6 @@
                 console.error("Revalidation error:", err);
               });
             });
-
-            netlifyIdentity.init();
           })
           .catch(err => {
             console.error("❌ Supabase write failed:", err);
@@ -278,6 +242,39 @@
         });
       }
     });
+  </script>
+</head>
+<body>
+  <header>Home</header>
+  <div class="tagline"><strong>Master the fretboard. Unlock your potential.</strong></div>
+
+  <p>Welcome to your Strategic Fretboard account.</p>
+  <p>If your subscription is active, you'll be granted access to the fretboard tool below. If not, you can begin a free trial to unlock it.</p>
+
+  <div id="error-message" style="display:none; color:#ff4d4d; font-weight:bold; margin-bottom:1rem;"></div>
+
+  <div class="cta">
+    <div id="fretboard-link" style="display:none;">
+      <a href="/fretboard.html">
+        <button>Go to Fretboard</button>
+      </a>
+    </div>
+    <div id="stripe-link" style="display:none;">
+      <button onclick="startStripeCheckout()">Start Free Trial</button>
+    </div>
+    <button onclick="netlifyIdentity.logout()" class="cta-button" style="margin-top: 1rem;">Log Out</button>
+  </div>
+
+  <img src="fret.png" alt="Fretboard Preview" class="image-preview" />
+
+  <footer>
+    &copy; 2025 Strategic Fretboard. All rights reserved.
+  </footer>
+</footer>
+  <script>
+    function startStripeCheckout() {
+      window.location.href = "https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00";
+    }
   </script>
 </body>
 </html>
