@@ -270,7 +270,6 @@
   <footer>
     &copy; 2025 Strategic Fretboard. All rights reserved.
   </footer>
-</footer>
   <script>
     function startStripeCheckout() {
       window.location.href = "https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00";
@@ -278,3 +277,70 @@
   </script>
 </body>
 </html>
+
+<!-- 
+Netlify Function: syncUsersToSupabase.js
+
+const fetch = require('node-fetch');
+
+exports.handler = async (event, context) => {
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Missing Supabase environment variables.' }),
+    };
+  }
+
+  try {
+    // Fetch users from Netlify Identity API
+    const netlifyIdentityToken = process.env.NETLIFY_IDENTITY_TOKEN; // if needed for auth
+    const usersResponse = await fetch('https://api.netlify.com/api/v1/accounts/{account_id}/users', {
+      headers: {
+        Authorization: `Bearer ${netlifyIdentityToken}`,
+      },
+    });
+
+    if (!usersResponse.ok) {
+      throw new Error('Failed to fetch Netlify users');
+    }
+
+    const users = await usersResponse.json();
+
+    // Prepare bulk upsert data
+    const subscribers = users.map(user => ({
+      email: user.email,
+      status: 'active',
+      type: 'paid', // or determine based on user metadata
+    }));
+
+    // Upsert into Supabase
+    const supabaseResponse = await fetch(`${SUPABASE_URL}/rest/v1/subscribers?on_conflict=email`, {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'resolution=merge-duplicates',
+      },
+      body: JSON.stringify(subscribers),
+    });
+
+    if (!supabaseResponse.ok) {
+      throw new Error('Failed to upsert subscribers to Supabase');
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Users synced successfully' }),
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
+    };
+  }
+};
+-->
