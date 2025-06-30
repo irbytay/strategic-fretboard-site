@@ -673,7 +673,7 @@ ${formatLine("E", shape.E)}
     // Add logout event handler
     window.netlifyIdentity.on("logout", () => {
       console.log("User logged out");
-      location.reload(); // Optionally redirect or refresh the page
+      window.location.href = "/index.html"; // Redirect to homepage after logout
     });
   }
 </script>
