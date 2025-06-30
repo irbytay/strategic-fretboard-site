@@ -596,12 +596,12 @@
       const selectedChordEl = document.getElementById("selected-chord");
       const chordKey = `${rootNote} ${scaleType}`;
       if (rootNote && scaleType && CHORD_SHAPES[chordKey]) {
-  const shape = CHORD_SHAPES[chordKey];
+        const shape = CHORD_SHAPES[chordKey];
 
-  if (typeof shape === "object") {
-    const formatLine = (string, value) => `${string}|${value}`;
-    selectedChordEl.innerHTML =
-      `<pre style="font-size: 1rem; font-family: 'Courier New', monospace; color: var(--highlight-color); background-color: #111; padding: 12px; border-radius: 8px; line-height: 1.5;">
+        if (typeof shape === "object" && shape.e && shape.B && shape.G && shape.D && shape.A && shape.E) {
+          const formatLine = (string, value) => `${string}|${value}`;
+          selectedChordEl.innerHTML =
+            `<pre style="font-size: 1rem; font-family: 'Courier New', monospace; color: var(--highlight-color); background-color: #111; padding: 12px; border-radius: 8px; line-height: 1.5;">
 ${formatLine("e", shape.e)}
 ${formatLine("B", shape.B)}
 ${formatLine("G", shape.G)}
@@ -609,14 +609,15 @@ ${formatLine("D", shape.D)}
 ${formatLine("A", shape.A)}
 ${formatLine("E", shape.E)}
 </pre>`;
-  } else {
-    selectedChordEl.textContent = `Selected: ${shape}`;
-  }
-} else if (rootNote) {
-  selectedChordEl.textContent = `Selected: ${rootNote} Major scale`;
-} else {
-  selectedChordEl.textContent = "";
-}
+        } else {
+          selectedChordEl.textContent = `Selected: ${shape}`;
+        }
+      } else if (rootNote) {
+        selectedChordEl.textContent = `Selected: ${rootNote} Major scale`;
+      } else {
+        selectedChordEl.textContent = "";
+      }
+    }
 
     // document.getElementById("accidental-toggle").addEventListener("change", renderFretboard);
     document.getElementById("root-select").addEventListener("change", renderFretboard);
