@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You | Strategic Fretboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Chivo', sans-serif;
+      background: linear-gradient(to bottom right, #0D1B2A, #112240); 
+      color: #ffffff;
+      text-align: center;
+      padding: 2rem;
+    }
+    header {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: #FFFFF0;
+    }
+    .tagline {
+      font-size: 1.6rem;
+      color: #ffffff;
+      font-weight: 500;
+      margin-bottom: 2rem;
+    }
+    p {
+      max-width: 700px;
+      margin: 1.5rem auto;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      color: #ffffff;
+    }
+    .cta {
+      margin: 2rem 0;
+    }
+    .cta button {
+      background-color: #28A745; /* Truth Green */
+      color: #ffffff;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin: 0 0.5rem;
+    }
+    .cta button:hover {
+      background-color: #218838;
+      transform: scale(1.03);
+    }
+    .image-placeholder {
+      width: 100%;
+      max-width: 600px;
+      height: 200px;
+      margin: 2rem auto;
+      background: repeating-linear-gradient(
+        90deg,
+        #444,
+        #444 10%,
+        #222 10%,
+        #222 20%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      border: 1px solid #666;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .image-preview {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      margin: 2rem auto;
+      border-radius: 8px;
+      border: 1px solid #666;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      display: block;
+      animation: fadeIn 1.2s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #7C8A9B;
+    }
+  </style>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    // Mock subscribers.json data for simulation (if needed)
+    // const mockSubscribers = {
+    //   "irbytay@icloud.com": {
+    //     "status": "active",
+    //     "type": "trial"
+    //   }
+    // };
+
+    // Show a loading message while validating
+    document.addEventListener("DOMContentLoaded", () => {
+      const fretLink = document.getElementById("fretboard-link");
+      const stripeLink = document.getElementById("stripe-link");
+
+      fretLink.style.display = "none";
+      stripeLink.style.display = "none";
+
+      netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.location.href = "/";
+          return;
+        }
+
+        const email = user.email;
+        console.log("Logged in as:", user.email);
+
+        // Fetch subscriber data from Supabase (encode email for URL safety)
+        fetch(`https://gopyzkcmvkbusdnwjlbb.supabase.co/rest/v1/subscribers?email=eq.${encodeURIComponent(email)}`, {
+          headers: {
+            apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8"
+          }
+        })
+          .then(res => {
+            if (!res.ok) throw new Error("Supabase query failed");
+            return res.json();
+          })
+          .then(data => {
+            console.log("Supabase subscriber query result:", data);
+            const subscriber = data[0];
+            console.log("🔍 Checking subscriber object for:", email);
+            if (!subscriber) {
+              console.warn("⚠️ No subscriber data found for this email.");
+              document.getElementById("error-message").textContent = "⚠️ No active subscription found for " + email;
+              document.getElementById("error-message").style.display = "block";
+              stripeLink.style.display = "block";
+            } else if (subscriber.status === "active") {
+              console.log("✅ Subscription is active for:", email);
+              if (subscriber.type === "trial") {
+                console.log("🟡 User is on free trial.");
+              } else if (subscriber.type === "paid") {
+                console.log("🟢 User is a full subscriber.");
+              }
+              fretLink.style.display = "block";
+            } else {
+              document.getElementById("error-message").textContent = "⚠️ Subscription is not active for " + email;
+              document.getElementById("error-message").style.display = "block";
+              stripeLink.style.display = "block";
+            }
+          })
+          .catch(err => {
+            console.error("Error checking subscription:", err);
+            document.getElementById("error-message").textContent = "⚠️ Unable to validate your subscription. Please try again.";
+            document.getElementById("error-message").style.display = "block";
+            stripeLink.style.display = "block";
+          });
+      });
+
+      netlifyIdentity.init();
+      netlifyIdentity.on("logout", () => {
+        window.location.href = "/index.html";
+      });
+    });
+  </script>
+</head>
+<body>
+  <header>Thank You</header>
+  <div class="tagline"><strong>🎉 Thank you for subscribing!</strong></div>
+  <p>We're setting up your access. Hang tight...</p>
+  <div id="error-message" style="display:none; color:#ff4d4d; font-weight:bold; margin-bottom:1rem;"></div>
+
+  <footer>
+    &copy; 2025 Strategic Fretboard. All rights reserved.
+  </footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.location.href = "/";
+          return;
+        }
+
+        fetch("https://gopyzkcmvkbusdnwjlbb.supabase.co/rest/v1/subscribers", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8"
+          },
+          body: JSON.stringify({
+            email: user.email,
+            status: "active",
+            type: "trial"
+          })
+        })
+        .then(res => {
+          if (res.ok) {
+            window.location.href = "/dashboard";
+          } else {
+            document.getElementById("error-message").textContent = "❌ Unable to finalize your subscription.";
+            document.getElementById("error-message").style.display = "block";
+          }
+        })
+        .catch(err => {
+          console.error("Subscription error:", err);
+          document.getElementById("error-message").textContent = "❌ An error occurred. Please contact support.";
+          document.getElementById("error-message").style.display = "block";
+        });
+      });
+
+      netlifyIdentity.init();
+    });
+  </script>
+</body>
+</html>
