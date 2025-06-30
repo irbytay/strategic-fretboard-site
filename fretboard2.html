@@ -262,6 +262,11 @@
   </style>
 </head>
 <body>
+  <div style="text-align: right; padding: 10px 20px; width: 100%;">
+    <button onclick="netlifyIdentity.logout()" style="padding: 8px 14px; font-size: 1rem; background-color: #FF4C4C; color: white; border: none; border-radius: 6px; cursor: pointer;">
+      Log Out
+    </button>
+  </div>
    <h1>The Strategic Fretboard</h1>
   
   <label style="margin: 12px 0;">
@@ -654,4 +659,20 @@ ${formatLine("E", shape.E)}
     });
   </script>
 </body>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    netlifyIdentity.on("logout", () => {
+      window.location.href = "/";
+    });
+
+    netlifyIdentity.init();
+
+    netlifyIdentity.on("init", user => {
+      if (!user) {
+        netlifyIdentity.on("login", () => {
+          document.location.href = "/fretboard.html";
+        });
+      }
+    });
+  </script>
 </html>
