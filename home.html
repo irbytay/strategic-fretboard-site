@@ -145,8 +145,8 @@
             console.log("🔍 Checking subscriber object for:", email);
             if (!subscriber) {
               console.warn("⚠️ No subscriber data found for this email.");
-              document.getElementById("error-message").textContent = "⚠️ No active subscription found for " + email;
-              document.getElementById("error-message").style.display = "block";
+              //document.getElementById("error-message").textContent = "⚠️ No active subscription found for " + email;
+              //document.getElementById("error-message").style.display = "block";
               stripeLink.style.display = "block";
             } else if (subscriber.status === "active") {
               console.log("✅ Subscription is active for:", email);
@@ -158,15 +158,15 @@
               fretLink.style.display = "block";
               document.getElementById("fretboard2-link").style.display = "block";
             } else {
-              document.getElementById("error-message").textContent = "⚠️ Subscription is not active for " + email;
-              document.getElementById("error-message").style.display = "block";
+              //document.getElementById("error-message").textContent = "⚠️ Subscription is not active for " + email;
+              //document.getElementById("error-message").style.display = "block";
               stripeLink.style.display = "block";
             }
           })
           .catch(err => {
             console.error("Error checking subscription:", err);
-            document.getElementById("error-message").textContent = "⚠️ Unable to validate your subscription. Please try again.";
-            document.getElementById("error-message").style.display = "block";
+            //document.getElementById("error-message").textContent = "⚠️ Unable to validate your subscription. Please try again.";
+            //document.getElementById("error-message").style.display = "block";
             stripeLink.style.display = "block";
           });
       });
@@ -261,8 +261,6 @@
   <p>Welcome to your Strategic Fretboard account.</p>
   <p>If your subscription is active, you'll be granted access to the fretboard tool below. If not, you can begin a free trial to unlock it.</p>
 
-  <div id="error-message" style="display:none; color:#ff4d4d; font-weight:bold; margin-bottom:1rem;"></div>
-
   <div class="cta">
     <div id="fretboard-link" style="display:none;">
       <a href="/fretboard.html">
@@ -291,7 +289,7 @@
   </footer>
   <script>
     function startStripeCheckout() {
-      window.location.href = "https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00";
+      window.location.href = "https://buy.stripe.com/5kQ9AT8x55h98Au13Hdwc01";
     }
   </script>
 
