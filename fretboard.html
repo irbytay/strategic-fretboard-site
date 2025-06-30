@@ -265,7 +265,7 @@
    <h1>The Strategic Fretboard</h1>
   <!-- Logout button, right-aligned, after header/nav -->
   <div style="text-align: right; padding: 10px 20px;">
-    <button onclick="netlifyIdentity.logout()" style="padding: 8px 14px; font-size: 1rem; background-color: #FF4C4C; color: white; border: none; border-radius: 6px; cursor: pointer;">
+    <button onclick="window.netlifyIdentity.logout()" style="padding: 8px 14px; font-size: 1rem; background-color: #FF4C4C; color: white; border: none; border-radius: 6px; cursor: pointer;">
       Log Out
     </button>
   </div>
@@ -671,7 +671,7 @@ ${formatLine("E", shape.E)}
     });
     window.netlifyIdentity.init();
     // Add logout event handler
-    netlifyIdentity.on("logout", () => {
+    window.netlifyIdentity.on("logout", () => {
       console.log("User logged out");
       location.reload(); // Optionally redirect or refresh the page
     });
