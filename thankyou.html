@@ -203,7 +203,7 @@
               document.querySelector("p").textContent = "✅ Thank you! Please give us a moment while we redirect you to your content...";
               setTimeout(() => {
                 window.location.href = "/fretboard.html";
-              }, 3000);
+              }, 5000);
             } else {
               // Not found or not active — insert or update via upsert
               fetch(`${baseUrl}?on_conflict=email`, {
