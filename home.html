@@ -37,20 +37,27 @@
       margin: 2rem 0;
     }
     .cta button {
-      background-color: #28A745; /* Truth Green */
-      color: #ffffff;
-      border: none;
-      padding: 1rem 2rem;
+      background: linear-gradient(145deg, #FFD700, #B8860B);
+      color: #0D1B2A;
+      border: 2px solid #A67C00;
+      padding: 1rem 2.4rem;
       font-size: 1.1rem;
-      font-weight: bold;
+      font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif;
+      border-radius: 12px;
       cursor: pointer;
-      border-radius: 8px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      margin: 0 0.5rem;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 14px rgba(212, 175, 55, 0.35);
+      transition: all 0.25s ease;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
     }
+
     .cta button:hover {
-      background-color: #218838;
-      transform: scale(1.03);
+      background: #FCD53F;
+      transform: scale(1.04);
+      box-shadow: 0 8px 18px rgba(255, 215, 0, 0.45);
     }
     .image-placeholder {
       width: 100%;
@@ -270,7 +277,9 @@
     <div id="stripe-link" style="display:none;">
       <button onclick="startStripeCheckout()">Start Free Trial</button>
     </div>
-    <button onclick="netlifyIdentity.logout()" class="cta-button" style="margin-top: 1rem;">Log Out</button>
+    <div>
+      <button onclick="netlifyIdentity.logout()" class="cta-button">Log Out</button>
+    </div>
   </div>
 
   <img src="fret.png" alt="Fretboard Preview" class="image-preview" />
