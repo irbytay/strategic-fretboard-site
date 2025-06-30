@@ -241,6 +241,33 @@
           .then(res => {
             if (!res.ok) throw new Error("Supabase insert failed");
             console.log("✅ Supabase record inserted/updated");
+
+            // Re-check subscription and update visibility
+            netlifyIdentity.on("init", user => {
+              if (!user) return;
+
+              const email = user.email;
+
+              fetch(`https://gopyzkcmvkbusdnwjlbb.supabase.co/rest/v1/subscribers?email=eq.${encodeURIComponent(email)}`, {
+                headers: {
+                  apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8",
+                  Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8"
+                }
+              })
+              .then(res => res.json())
+              .then(data => {
+                const subscriber = data[0];
+                if (subscriber && subscriber.status === "active") {
+                  document.getElementById("fretboard-link").style.display = "block";
+                  console.log("🎯 Fretboard access granted after post-checkout validation.");
+                }
+              })
+              .catch(err => {
+                console.error("Revalidation error:", err);
+              });
+            });
+
+            netlifyIdentity.init();
           })
           .catch(err => {
             console.error("❌ Supabase write failed:", err);
