@@ -187,32 +187,48 @@
           return;
         }
 
-        fetch("https://gopyzkcmvkbusdnwjlbb.supabase.co/rest/v1/subscribers", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8",
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8"
-          },
-          body: JSON.stringify({
-            email: user.email,
-            status: "active",
-            type: "trial"
+        const email = user.email;
+        const baseUrl = "https://gopyzkcmvkbusdnwjlbb.supabase.co/rest/v1/subscribers";
+        const headers = {
+          "Content-Type": "application/json",
+          apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8",
+          Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8"
+        };
+
+        fetch(`${baseUrl}?email=eq.${encodeURIComponent(email)}`, { headers })
+          .then(res => res.json())
+          .then(data => {
+            if (data.length && data[0].status === "active") {
+              console.log("✅ Existing subscriber active:", email);
+              window.location.href = "/dashboard";
+            } else {
+              // Not found or not active — insert or update via upsert
+              fetch(`${baseUrl}?on_conflict=email`, {
+                method: "POST",
+                headers,
+                body: JSON.stringify({ email, status: "active", type: "trial" })
+              })
+              .then(res => {
+                if (res.ok) {
+                  console.log("📝 Subscriber upserted");
+                  window.location.href = "/dashboard";
+                } else {
+                  document.getElementById("error-message").textContent = "❌ Unable to finalize your subscription.";
+                  document.getElementById("error-message").style.display = "block";
+                }
+              })
+              .catch(err => {
+                console.error("Subscription error:", err);
+                document.getElementById("error-message").textContent = "❌ An error occurred. Please contact support.";
+                document.getElementById("error-message").style.display = "block";
+              });
+            }
           })
-        })
-        .then(res => {
-          if (res.ok) {
-            window.location.href = "/dashboard";
-          } else {
-            document.getElementById("error-message").textContent = "❌ Unable to finalize your subscription.";
+          .catch(err => {
+            console.error("Validation error:", err);
+            document.getElementById("error-message").textContent = "⚠️ Could not validate your subscription.";
             document.getElementById("error-message").style.display = "block";
-          }
-        })
-        .catch(err => {
-          console.error("Subscription error:", err);
-          document.getElementById("error-message").textContent = "❌ An error occurred. Please contact support.";
-          document.getElementById("error-message").style.display = "block";
-        });
+          });
       });
 
       netlifyIdentity.init();
