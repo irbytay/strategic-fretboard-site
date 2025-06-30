@@ -149,6 +149,7 @@
                 console.log("🟢 User is a full subscriber.");
               }
               fretLink.style.display = "block";
+              document.getElementById("fretboard2-link").style.display = "block";
             } else {
               document.getElementById("error-message").textContent = "⚠️ Subscription is not active for " + email;
               document.getElementById("error-message").style.display = "block";
@@ -226,6 +227,7 @@
                 const subscriber = data[0];
                 if (subscriber && subscriber.status === "active") {
                   document.getElementById("fretboard-link").style.display = "block";
+                  document.getElementById("fretboard2-link").style.display = "block";
                   console.log("🎯 Fretboard access granted after post-checkout validation.");
                 }
               })
@@ -258,6 +260,11 @@
     <div id="fretboard-link" style="display:none;">
       <a href="/fretboard.html">
         <button>Go to Fretboard</button>
+      </a>
+    </div>
+    <div id="fretboard2-link" style="display:none;">
+      <a href="/fretboard2.html">
+        <button>Go to Fretboard 2</button>
       </a>
     </div>
     <div id="stripe-link" style="display:none;">
