@@ -414,7 +414,7 @@
     // Tuning selection is disabled: fixed tuning.
 
     function getNoteAt(startNote, fret) {
-      const useFlats = document.getElementById("accidental-toggle")?.checked;
+      const useFlats = false;
       const ALL_NOTES = useFlats ? FLAT_NOTES : SHARP_NOTES;
 
       const startIndex = ALL_NOTES.indexOf(startNote);
@@ -461,7 +461,7 @@
         fretNumContainer.appendChild(label);
       }
 
-      const useFlats = document.getElementById("accidental-toggle")?.checked;
+      const useFlats = false;
       const rootNote = document.getElementById("root-select")?.value;
       const scaleType = "Major";
       const scaleIntervals = SCALE_PATTERNS[scaleType] || null;
