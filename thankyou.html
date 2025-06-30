@@ -210,7 +210,7 @@
               console.log("✅ Existing subscriber active:", email);
               document.querySelector("p").textContent = "✅ Thank you! Please give us a moment while we redirect you to your content...";
               setTimeout(() => {
-                window.location.href = "/home.html";
+                // window.location.href = "/home.html";
               }, 5000);
             } else {
               // Not found or not active — insert or update via upsert
@@ -224,24 +224,24 @@
                   console.log("📝 Subscriber upserted");
                   document.querySelector("p").textContent = "✅ Thank you! Please give us a moment while we redirect you to your content...";
                   setTimeout(() => {
-                    window.location.href = "/home.html";
+                    // window.location.href = "/home.html";
                   }, 5000);
                 } else {
                   console.warn("❌ Upsert failed — redirecting anyway.");
                   setTimeout(() => {
-                    window.location.href = "/home.html";
+                    // window.location.href = "/home.html";
                   }, 5000);
                 }
               })
               .catch(err => {
                 console.error("Subscription error:", err);
-                window.location.href = "/home.html";
+                // window.location.href = "/home.html";
               });
             }
           })
           .catch(err => {
             console.error("Validation error:", err);
-            window.location.href = "/home.html";
+            // window.location.href = "/home.html";
           });
       });
 
