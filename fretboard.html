@@ -265,7 +265,7 @@
    <h1>The Strategic Fretboard</h1>
   <!-- Logout button, right-aligned, after header/nav -->
   <div style="text-align: right; padding: 10px 20px;">
-    <button onclick="window.netlifyIdentity.logout()" style="padding: 8px 14px; font-size: 1rem; background-color: #FF4C4C; color: white; border: none; border-radius: 6px; cursor: pointer;">
+    <button onclick="netlifyIdentity.logout()" style="padding: 8px 14px; font-size: 1rem; background-color: #FF4C4C; color: white; border: none; border-radius: 6px; cursor: pointer;">
       Log Out
     </button>
   </div>
@@ -661,21 +661,17 @@ ${formatLine("E", shape.E)}
 </script>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/"; // Optionally redirect on login
-        });
-      }
-    });
-    window.netlifyIdentity.init();
-    // Add logout event handler
-    window.netlifyIdentity.on("logout", () => {
-      console.log("User logged out");
-      window.location.href = "/index.html"; // Redirect to homepage after logout
+netlifyIdentity.on("logout", () => {
+  window.location.href = "/"; // Redirect to home page after logout
+});
+netlifyIdentity.init();
+netlifyIdentity.on("init", user => {
+  if (!user) {
+    netlifyIdentity.on("login", () => {
+      document.location.href = "/fretboard.html";
     });
   }
+});
 </script>
 </body>
 </html>
