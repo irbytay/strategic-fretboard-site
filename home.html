@@ -202,7 +202,6 @@
       window.location.href = "https://buy.stripe.com/7sY8wP4gP5h9182aEhdwc00";
     }
 
-    // Optional: Handle URL parameters after Stripe redirects back
     document.addEventListener("DOMContentLoaded", () => {
       const urlParams = new URLSearchParams(window.location.search);
       const sessionId = urlParams.get("session_id");
@@ -210,16 +209,23 @@
       if (sessionId) {
         console.log("🔁 Stripe Checkout session ID returned:", sessionId);
 
-        netlifyIdentity.on("init", user => {
-          if (!user) {
-            console.warn("User not logged in, skipping Supabase update.");
+        fetch("/.netlify/functions/validateStripeSession", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sessionId })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (!data || !data.email) {
+            console.warn("⚠️ Stripe session could not be validated.");
             return;
           }
 
-          const email = user.email;
+          const email = data.email;
+          console.log("✅ Stripe email retrieved:", email);
 
-          // Update Supabase with new subscriber info after checkout
-          fetch("https://gopyzkcmvkbusdnwjlbb.supabase.co/rest/v1/subscribers", {
+          // Now write to Supabase
+          fetch("https://gopyzkcmvkbusdnwjlbb.supabase.co/rest/v1/subscribers?on_conflict=email", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -234,14 +240,15 @@
           })
           .then(res => {
             if (!res.ok) throw new Error("Supabase insert failed");
-            console.log("✅ Subscription info written to Supabase");
+            console.log("✅ Supabase record inserted/updated");
           })
           .catch(err => {
-            console.error("❌ Failed to write subscriber:", err);
+            console.error("❌ Supabase write failed:", err);
           });
+        })
+        .catch(err => {
+          console.error("❌ Failed to verify Stripe session:", err);
         });
-
-        netlifyIdentity.init();
       }
     });
   </script>
