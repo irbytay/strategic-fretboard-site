@@ -658,6 +658,24 @@ ${formatLine("E", shape.E)}
       document.getElementById("accidental-toggle").checked = false;
       renderFretboard();
     });
-  </script>
+</script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/"; // Optionally redirect on login
+        });
+      }
+    });
+    window.netlifyIdentity.init();
+    // Add logout event handler
+    netlifyIdentity.on("logout", () => {
+      console.log("User logged out");
+      location.reload(); // Optionally redirect or refresh the page
+    });
+  }
+</script>
 </body>
 </html>
