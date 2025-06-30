@@ -206,38 +206,17 @@
         fetch(`${baseUrl}?email=eq.${encodeURIComponent(email)}`, { headers })
           .then(res => res.json())
           .then(data => {
-            if (data.length && data[0].status === "active") {
-              console.log("✅ Existing subscriber active:", email);
-              document.querySelector("p").textContent = "✅ Thank you! Please give us a moment while we redirect you to your content...";
-              setTimeout(() => {
-                // window.location.href = "/home.html";
-              }, 5000);
-            } else {
-              // Not found or not active — insert or update via upsert
-              fetch(`${baseUrl}?on_conflict=email`, {
-                method: "POST",
-                headers,
-                body: JSON.stringify({ email, status: "active", type: "trial" })
-              })
-              .then(res => {
-                if (res.ok) {
-                  console.log("📝 Subscriber upserted");
-                  document.querySelector("p").textContent = "✅ Thank you! Please give us a moment while we redirect you to your content...";
-                  setTimeout(() => {
-                    // window.location.href = "/home.html";
-                  }, 5000);
-                } else {
-                  console.warn("❌ Upsert failed — redirecting anyway.");
-                  setTimeout(() => {
-                    // window.location.href = "/home.html";
-                  }, 5000);
-                }
-              })
-              .catch(err => {
-                console.error("Subscription error:", err);
-                // window.location.href = "/home.html";
-              });
-            }
+            // Always show instructions for manual validation
+            document.querySelector("p").innerHTML = `
+              <strong>🎉 Thank you for subscribing!</strong><br /><br />
+              Welcome to the Strategic Fretboard — and thank you for stepping into something truly different. This project isn’t a company or a content farm — it’s a one-person mission to build the most intuitive, empowering guitar tool on the internet.
+              <br /><br />
+              If you just made a purchase, I’m personally verifying all new subscriptions. Please forward your receipt or confirmation, along with your name and the email you used at checkout, to the address below. I’ll unlock your access as quickly as I can.
+              <br /><br />
+              📧 Email: <strong>team@strategicfretboard.com</strong>
+              <br /><br />
+              Thanks for your patience — and your belief in this grassroots, gold-standard vision.
+            `;
           })
           .catch(err => {
             console.error("Validation error:", err);
