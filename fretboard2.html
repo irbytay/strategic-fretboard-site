@@ -402,11 +402,6 @@
       <option value="Chromatic">Chromatic</option>
     </select>
   </label>
-  <label style="margin-bottom: 12px;">
-    <input type="checkbox" id="accidental-toggle" />
-    Descending Mode (Flats & Reverse Scale)
-    <span id="direction-indicator" style="margin-left: 12px; font-size: 1rem; font-weight: bold; color: #FFD700; text-shadow: 0 0 6px rgba(255, 215, 0, 0.7), 0 0 12px rgba(255, 215, 0, 0.5);">↗ Ascending</span>
-  </label>
   <div class="help-icon-container">
   <div class="help-icon" tabindex="0">🦉</div>
   <div class="help-tooltip">
@@ -434,6 +429,11 @@
       <div class="fretboard" id="fretboard"></div>
     </div>
   </div>
+  <label style="margin-bottom: 12px;">
+    <input type="checkbox" id="accidental-toggle" />
+    Descending Mode (Flats & Reverse Scale)
+    <span id="direction-indicator" style="margin-left: 12px; font-size: 1rem; font-weight: bold; color: #FFD700; text-shadow: 0 0 6px rgba(255, 215, 0, 0.7), 0 0 12px rgba(255, 215, 0, 0.5);">↗ Ascending</span>
+  </label>
   <div id="selected-chord" style="margin-top: 20px; font-size: 1.1rem; color: var(--highlight-color); font-weight: bold;"></div>
 
   <script>
