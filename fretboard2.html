@@ -470,22 +470,34 @@
   <div id="selected-chord" style="margin-top: 20px; font-size: 1.1rem; color: var(--highlight-color); font-weight: bold;"></div>
 
   <script>
+    const FLAT_TO_SHARP = {
+      "Bb": "A#",
+      "Eb": "D#",
+      "Ab": "G#",
+      "Db": "C#",
+      "Gb": "F#"
+    };
+
+    function normalizeFlatsToSharps(tuningArray) {
+      return tuningArray.map(note => FLAT_TO_SHARP[note] || note);
+    }
+
     const SHARP_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const FLAT_NOTES  = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
     const tuningPresets = {
       standard: ['E', 'B', 'G', 'D', 'A', 'E'],
-      halfStepDown: ['D#', 'A#', 'F#', 'C#', 'G#', 'D#'],
+      halfStepDown: ['Eb', 'Bb', 'Gb', 'Db', 'Ab', 'Eb'],
       wholeStepDown: ['D', 'A', 'F', 'C', 'G', 'D'],
       dropD: ['E', 'B', 'G', 'D', 'A', 'D'],
       dropC: ['D', 'A', 'F', 'C', 'G', 'C'],
       dadgad: ['D', 'A', 'G', 'D', 'A', 'D'],
       openG: ['D', 'B', 'G', 'D', 'G', 'D'],
-      openD: ['D', 'A', 'F#', 'D', 'A', 'D'],
+      openD: ['D', 'A', 'Gb', 'D', 'A', 'D'],
       openC: ['E', 'C', 'G', 'C', 'G', 'C'],
-      openE: ['E', 'B', 'G#', 'E', 'B', 'E'],
+      openE: ['E', 'B', 'Ab', 'E', 'B', 'E'],
       nst: ['G', 'C', 'D', 'A', 'E', 'G'],
       doubleDropD: ['E', 'B', 'G', 'D', 'A', 'D'],
-      dropCsharp: ['D#', 'A#', 'F#', 'C#', 'G#', 'C#'],
+      dropCsharp: ['Eb', 'Bb', 'Gb', 'Db', 'Ab', 'Db'],
       openA: ['E', 'A', 'E', 'A', 'C#', 'E'],
       // Additional tunings
       modal: ['E', 'A', 'D', 'A', 'A', 'D'], // Modal D
@@ -854,7 +866,9 @@ ${formatLine("E", shape.E)}
     document.getElementById("preset-tuning-select").addEventListener("change", (e) => {
       const preset = e.target.value;
       if (tuningPresets[preset]) {
-        standardTuning = [...tuningPresets[preset]];
+        const useFlats = document.getElementById("accidental-toggle")?.checked;
+        const rawTuning = tuningPresets[preset];
+        standardTuning = useFlats ? rawTuning : normalizeFlatsToSharps(rawTuning);
         renderFretboard();
       }
     });
