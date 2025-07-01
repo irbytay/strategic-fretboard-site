@@ -6,9 +6,20 @@
   <title>The Strategic Fretboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@600&display=swap');
+
+    .exo-tagline {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.6rem;
+      color: #ffffff;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      display: block;
+      text-align: center;
+    }
     .section-title {
       font-size: 1.6rem;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Playfair Display', sans-serif;
       color: var(--highlight-color);
       margin-top: 1rem;
     }
@@ -19,32 +30,32 @@
       line-height: 1.6;
       font-size: 1.1rem;
       color: #ffffff;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Merriweather', sans-serif;
     }
 
     .section-note {
       font-size: 0.9rem;
       color: #FFD700;
       font-weight: bold;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Playfair Display', sans-serif;
     }
 
     .section-note-muted {
       font-size: 0.85rem;
       color: #aaa;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Merriweather', sans-serif;
     }
 
     .section-note-more-muted {
       font-size: 0.8rem;
       color: #888;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Merriweather', sans-serif;
     }
 
     .section-subdued {
       font-size: 1rem;
       color: #ccc;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Merriweather', sans-serif;
     }
 
     .section-list {
@@ -366,9 +377,9 @@
 <body>
   <header class="gold-title">The Strategic Fretboard</header>
 
-  <div class="tagline section-title">
-    <strong>A visual map. A strategic tool. A new way to see the guitar.</strong>
-  </div>
+  <span class="exo-tagline">
+    A visual map. A strategic tool. A new way to see the guitar.
+  </span>
 
   <p class="section-paragraph">
     Welcome to The Strategic Fretboard — a modern tool that transforms the fretboard into a living map of music theory. Designed for players who want more than shapes and patterns, this system reveals the connections between notes, scales, chords, and intervals across the full neck.
@@ -707,6 +718,22 @@ ${formatLine("E", shape.E)}
   </script>
 </body>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    netlifyIdentity.on("logout", () => {
+      window.location.href = "/";
+    });
+
+    netlifyIdentity.init();
+
+    netlifyIdentity.on("init", user => {
+      if (!user) {
+        netlifyIdentity.on("login", () => {
+          document.location.href = "home.html";
+        });
+      }
+    });
+  </script>
+</html>  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     netlifyIdentity.on("logout", () => {
       window.location.href = "/";
