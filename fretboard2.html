@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -366,38 +365,6 @@
    <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
 
   <label style="margin: 12px 0;">
-    Select Tuning:
-    <select id="preset-tuning-select">
-      <option value="standard">Standard</option>
-      <option value="halfStepDown">Half-Step Down</option>
-      <option value="wholeStepDown">Whole-Step Down</option>
-      <option value="dropD">Drop D</option>
-      <option value="dropC">Drop C</option>
-      <option value="dropCsharp">Drop C#</option>
-      <option value="dadgad">DADGAD</option>
-      <option value="doubleDropD">Double Drop D</option>
-      <option value="openG">Open G</option>
-      <option value="openD">Open D</option>
-      <option value="openE">Open E</option>
-      <option value="openC">Open C</option>
-      <option value="openA">Open A</option>
-      <option value="nst">NST</option>
-      <option value="modal">Modal D</option>
-      <option value="openGMinor">Open G Minor</option>
-      <option value="openF">Open F</option>
-      <option value="openFMinor">Open F Minor</option>
-      <option value="openB">Open B</option>
-      <option value="openBMinor">Open B Minor</option>
-      <option value="dropB">Drop B</option>
-      <option value="dropA">Drop A</option>
-      <option value="baritone">Baritone</option>
-      <option value="allFourth">All Fourths</option>
-      <option value="majorThird">Major Thirds</option>
-      <option value="minorThird">Minor Thirds</option>
-      <option value="augmentedFourth">Augmented Fourths</option>
-    </select>
-  </label>
-  <label style="margin: 12px 0;">
     Select Root:
     <select id="root-select">
       <option value="">-- Root --</option>
@@ -470,68 +437,9 @@
   <div id="selected-chord" style="margin-top: 20px; font-size: 1.1rem; color: var(--highlight-color); font-weight: bold;"></div>
 
   <script>
-    const NOTE_EQUIVALENTS = {
-      "Bb": "A#",
-      "A#": "Bb",
-      "Eb": "D#",
-      "D#": "Eb",
-      "Ab": "G#",
-      "G#": "Ab",
-      "Db": "C#",
-      "C#": "Db",
-      "Gb": "F#",
-      "F#": "Gb"
-    };
-
-    function normalizeNote(note, useFlats = false) {
-      if (useFlats && NOTE_EQUIVALENTS[note] && note.includes("#")) {
-        return NOTE_EQUIVALENTS[note]; // Sharp to flat
-      }
-      if (!useFlats && NOTE_EQUIVALENTS[note] && note.includes("b")) {
-        return NOTE_EQUIVALENTS[note]; // Flat to sharp
-      }
-      return note;
-    }
-
-    function normalizeTuningArray(tuningArray, useFlats = false) {
-      return tuningArray.map(note => normalizeNote(note, useFlats));
-    }
-
     const SHARP_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const FLAT_NOTES  = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
-    // All notes with enharmonic equivalents shown together
-    const ALL_NOTES_ENHARMONIC = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B'];
-    const tuningPresets = {
-      standard: ['E', 'B', 'G', 'D', 'A', 'E'],
-      halfStepDown: ['Eb', 'Bb', 'Gb', 'Db', 'Ab', 'Eb'],
-      wholeStepDown: ['D', 'A', 'F', 'C', 'G', 'D'],
-      dropD: ['E', 'B', 'G', 'D', 'A', 'D'],
-      dropC: ['D', 'A', 'F', 'C', 'G', 'C'],
-      dadgad: ['D', 'A', 'G', 'D', 'A', 'D'],
-      openG: ['D', 'B', 'G', 'D', 'G', 'D'],
-      openD: ['D', 'A', 'Gb', 'D', 'A', 'D'],
-      openC: ['E', 'C', 'G', 'C', 'G', 'C'],
-      openE: ['E', 'B', 'Ab', 'E', 'B', 'E'],
-      nst: ['G', 'C', 'D', 'A', 'E', 'G'],
-      doubleDropD: ['E', 'B', 'G', 'D', 'A', 'D'],
-      dropCsharp: ['Eb', 'Bb', 'Gb', 'Db', 'Ab', 'Db'],
-      openA: ['E', 'A', 'E', 'A', 'C#', 'E'],
-      // Additional tunings
-      modal: ['E', 'A', 'D', 'A', 'A', 'D'], // Modal D
-      openGMinor: ['D', 'Bb', 'G', 'D', 'G', 'D'],
-      openF: ['F', 'A', 'C', 'F', 'C', 'F'],
-      openFMinor: ['F', 'Ab', 'C', 'F', 'C', 'F'],
-      openB: ['B', 'F#', 'B', 'F#', 'B', 'D#'],
-      openBMinor: ['B', 'F#', 'B', 'F#', 'B', 'D'],
-      dropB: ['B', 'F#', 'B', 'E', 'G#', 'C#'],
-      dropA: ['C#', 'G#', 'E', 'B', 'F#', 'A'],
-      baritone: ['B', 'E', 'A', 'D', 'F#', 'B'],
-      allFourth: ['E', 'A', 'D', 'G', 'C', 'F'],
-      majorThird: ['E', 'G#', 'C', 'E', 'G#', 'C'],
-      minorThird: ['E', 'G', 'Bb', 'C#', 'E', 'G'],
-      augmentedFourth: ['E', 'A', 'D#', 'A', 'D#', 'A']
-    };
-    let standardTuning = [...tuningPresets.standard];
+    const standardTuning = ['E', 'B', 'G', 'D', 'A', 'E'];
     const numFrets = 24;
 
     const SCALE_PATTERNS = {
@@ -554,23 +462,20 @@
     const fretboardEl = document.getElementById("fretboard");
 
     function createTuningSelect(stringIndex, defaultNote) {
+      const useFlats = document.getElementById("accidental-toggle")?.checked;
+      const ALL_NOTES = useFlats ? FLAT_NOTES : SHARP_NOTES;
+
       const select = document.createElement("select");
       select.className = "tuning-select";
       select.dataset.string = stringIndex;
 
       while (select.firstChild) select.removeChild(select.firstChild);
 
-      ALL_NOTES_ENHARMONIC.forEach(note => {
+      ALL_NOTES.forEach(note => {
         const opt = document.createElement("option");
         opt.value = note;
         opt.textContent = note;
-        if (
-          defaultNote === note ||
-          (defaultNote && note.includes(defaultNote)) ||
-          (defaultNote && defaultNote.includes(note))
-        ) {
-          opt.selected = true;
-        }
+        if (note === defaultNote) opt.selected = true;
         select.appendChild(opt);
       });
       select.addEventListener("change", () => {
@@ -581,12 +486,11 @@
     }
 
     function getNoteAt(startNote, fret) {
-      // Always use base note (if enharmonic) for index calculation
-      const baseNote = startNote.split('/')[0];
-      const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-      const index = NOTES.indexOf(baseNote);
-      const newIndex = (index + fret) % 12;
-      return ALL_NOTES_ENHARMONIC[newIndex];
+      const useFlats = document.getElementById("accidental-toggle")?.checked;
+      const ALL_NOTES = useFlats ? FLAT_NOTES : SHARP_NOTES;
+
+      const startIndex = ALL_NOTES.indexOf(startNote);
+      return ALL_NOTES[(startIndex + fret) % 12];
     }
 
     // Chord shapes dictionary (root + type as key)
@@ -762,9 +666,7 @@
 
       for (let string = 0; string < 6; string++) {
         const tuning = document.querySelector(`select[data-string='${string}']`);
-        // Use only base note for indexing, but keep full label for display
         const tuningNote = tuning ? tuning.value : standardTuning[string];
-        const baseTuningNote = tuningNote.split('/')[0];
 
         const row = document.createElement("div");
         row.className = "string-row";
@@ -776,13 +678,10 @@
           const cell = document.createElement("div");
           cell.className = "note-cell";
           const note = getNoteAt(tuningNote, fret);
-
-          // For interval calculation, use base note of root and note
-          const ALL_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-          const rootBase = rootNote ? rootNote.split('/')[0] : '';
-          const rootIndex = ALL_NOTES.indexOf(rootBase);
-          const noteBase = note.split('/')[0];
-          const noteIndex = ALL_NOTES.indexOf(noteBase);
+          
+          const ALL_NOTES = useFlats ? FLAT_NOTES : SHARP_NOTES;
+          const rootIndex = ALL_NOTES.indexOf(rootNote);
+          const noteIndex = ALL_NOTES.indexOf(note);
           const semitoneFromRoot = useFlats
             ? (rootIndex - noteIndex + 12) % 12
             : (noteIndex - rootIndex + 12) % 12;
@@ -803,6 +702,8 @@
           } else {
             cell.textContent = showNote ? note : "";
           }
+
+
 
           row.appendChild(cell);
         }
@@ -883,17 +784,6 @@ ${formatLine("E", shape.E)}
     });
 
     renderFretboard();
-
-    // Add event listener for preset tuning dropdown
-    document.getElementById("preset-tuning-select").addEventListener("change", (e) => {
-      const preset = e.target.value;
-      if (tuningPresets[preset]) {
-        const useFlats = document.getElementById("accidental-toggle")?.checked;
-        const rawTuning = tuningPresets[preset];
-        standardTuning = normalizeTuningArray(rawTuning, useFlats);
-        renderFretboard();
-      }
-    });
 
     // Add reset button functionality
     document.getElementById("reset-fretboard").addEventListener("click", () => {
