@@ -341,20 +341,13 @@
   visibility: visible;
   opacity: 1;
 }
-     .logo-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 12px;
-      margin-bottom: 12px;
-    }
-
     .logo-image {
-      width: 75%;
+      display: block;
+      margin: 12px auto;
+      max-width: 500px;
+      width: 100%;
       height: auto;
       object-fit: contain;
-      margin-top: 0;
-      margin-bottom: 0;
     }
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
@@ -390,9 +383,7 @@
   </script>
 </head>
 <body>
-  <div class="logo-container">
-    <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
-  </div>
+  <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
 
   <span class="exo-tagline">
     A visual map. A strategic tool. A new way to see the guitar.
