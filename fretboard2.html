@@ -405,6 +405,7 @@
   <label style="margin-bottom: 12px;">
     <input type="checkbox" id="accidental-toggle" />
     Descending Mode (Flats & Reverse Scale)
+    <span id="direction-indicator" style="margin-left: 12px; font-size: 1rem; font-weight: bold; color: #FFD700; text-shadow: 0 0 6px rgba(255, 215, 0, 0.7), 0 0 12px rgba(255, 215, 0, 0.5);">↗ Ascending</span>
   </label>
   <div class="help-icon-container">
   <div class="help-icon" tabindex="0">🦉</div>
@@ -778,7 +779,14 @@ ${formatLine("E", shape.E)}
 
     document.getElementById("accidental-toggle").addEventListener("change", renderFretboard);
     document.getElementById("root-select").addEventListener("change", renderFretboard);
-    document.getElementById("scale-type-select").addEventListener("change", renderFretboard); 
+    document.getElementById("scale-type-select").addEventListener("change", renderFretboard);
+
+    // Direction indicator toggle logic
+    const indicator = document.getElementById("direction-indicator");
+    const accidentalToggle = document.getElementById("accidental-toggle");
+    accidentalToggle.addEventListener("change", () => {
+      indicator.textContent = accidentalToggle.checked ? "↙ Descending" : "↗ Ascending";
+    });
 
     renderFretboard();
 
