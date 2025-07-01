@@ -741,22 +741,6 @@ ${formatLine("E", shape.E)}
       }
     });
   </script>
-</html>  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    netlifyIdentity.on("logout", () => {
-      window.location.href = "/";
-    });
-
-    netlifyIdentity.init();
-
-    netlifyIdentity.on("init", user => {
-      if (!user) {
-        netlifyIdentity.on("login", () => {
-          document.location.href = "home.html";
-        });
-      }
-    });
-  </script>
-</html>
+</html> 
 
    
