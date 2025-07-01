@@ -312,15 +312,21 @@
 
   .strategic-owl-credit a {
     color: #FFD700;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.05rem;
     text-decoration: none;
-    transition: color 0.3s ease;
-    text-shadow: 0 0 6px rgba(255, 215, 0, 0.6), 0 0 12px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+    text-shadow:
+      0 0 6px rgba(255, 215, 0, 0.7),
+      0 0 12px rgba(255, 215, 0, 0.5),
+      0 0 18px rgba(255, 215, 0, 0.3);
   }
 
   .strategic-owl-credit a:hover {
-    color: #FCD53F;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 16px rgba(255, 215, 0, 0.6);
+    color: #fffbe0;
+    text-shadow:
+      0 0 10px rgba(255, 255, 150, 0.8),
+      0 0 20px rgba(255, 255, 150, 0.6);
   }
   </style>
 </head>
@@ -759,7 +765,7 @@ ${formatLine("E", shape.E)}
     <button class="styled-logout-button" onclick="netlifyIdentity.logout()">Log Out</button>
   </div>
   <p class="strategic-owl-credit">
-    <a href="https://thestrategicowl.com" target="_blank" rel="noopener noreferrer">Brought to you by The Strategic Owl</a>
+    <a href="https://thestrategicowl.com" target="_blank" rel="noopener noreferrer"><strong>Brought to you by The Strategic Owl</strong></a>
   </p>
   <footer style="font-size: 0.85rem; color: #888; text-align: center; margin-top: 12px;">
     © 2025 Strategic Fretboard. All rights reserved. This tool is protected under U.S. copyright law.
