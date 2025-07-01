@@ -113,20 +113,20 @@
     // };
 
     // Show a loading message while validating
-    document.addEventListener("DOMContentLoaded", () => {
-      const fretLink = document.getElementById("fretboard-link");
-      const stripeLink = document.getElementById("stripe-link");
+document.addEventListener("DOMContentLoaded", () => {
+  const fretLink = document.getElementById("fretboard-link");
+  const stripeLink = document.getElementById("stripe-link");
 
-      fretLink.style.display = "none";
-      stripeLink.style.display = "none";
+  fretLink.style.display = "none";
+  stripeLink.style.display = "none";
 
-      netlifyIdentity.on("init", user => {
-        if (!user) {
-          setTimeout(() => {
-  window.location.href = '/';
-}, 3000); // 3-second delay
-          return;
-        }
+  netlifyIdentity.on("init", user => {
+    if (!user) {
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 3000); // ✅ 3-second delay before redirect
+      return;
+    }
 
         const email = user.email;
 
