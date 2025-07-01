@@ -265,8 +265,8 @@
       height: auto;
       max-width: 80vw;
       object-fit: contain;
-      margin-top: 6px;
-      margin-bottom: 6px;
+      margin-top: 10px;
+      margin-bottom: 16px;
     }
 
     .logout-container {
@@ -303,8 +303,8 @@
 </style>
   <style>
   .strategic-owl-credit {
-    margin-top: 4px;
-    margin-bottom: 16px;
+    margin-top: 12px;
+    margin-bottom: 18px;
     font-size: 1rem;
     color: #bbb;
     font-family: 'Space Grotesk', sans-serif;
@@ -326,10 +326,6 @@
 </head>
 <body>
    <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
-
-  <p class="strategic-owl-credit">
-    <a href="https://thestrategicowl.com" target="_blank" rel="noopener noreferrer">Brought to you by The Strategic Owl</a>
-  </p>
 
   <label style="margin: 12px 0;">
     Select Root:
@@ -762,6 +758,9 @@ ${formatLine("E", shape.E)}
   <div class="logout-container">
     <button class="styled-logout-button" onclick="netlifyIdentity.logout()">Log Out</button>
   </div>
+  <p class="strategic-owl-credit">
+    <a href="https://thestrategicowl.com" target="_blank" rel="noopener noreferrer">Brought to you by The Strategic Owl</a>
+  </p>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     netlifyIdentity.init();
@@ -776,6 +775,4 @@ ${formatLine("E", shape.E)}
       }
     });
   </script>
-</html>
-</body>
 </html>
