@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -366,18 +365,6 @@
    <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
 
   <label style="margin: 12px 0;">
-    Select Tuning:
-    <select id="preset-tuning-select">
-      <option value="standard">Standard (E A D G B E)</option>
-      <option value="halfStepDown">Half-Step Down (Eb Ab Db Gb Bb Eb)</option>
-      <option value="dropD">Drop D (D A D G B E)</option>
-      <option value="dadgad">DADGAD (D A D G A D)</option>
-      <option value="openG">Open G (D G D G B D)</option>
-      <option value="openD">Open D (D A D F# A D)</option>
-      <option value="nst">NST (G C D A E G)</option>
-    </select>
-  </label>
-  <label style="margin: 12px 0;">
     Select Root:
     <select id="root-select">
       <option value="">-- Root --</option>
@@ -452,16 +439,7 @@
   <script>
     const SHARP_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const FLAT_NOTES  = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
-    const tuningPresets = {
-      standard: ['E', 'B', 'G', 'D', 'A', 'E'],
-      halfStepDown: ['Eb', 'Bb', 'Gb', 'Db', 'Ab', 'Eb'],
-      dropD: ['E', 'B', 'G', 'D', 'A', 'D'],
-      dadgad: ['D', 'A', 'G', 'D', 'A', 'D'],
-      openG: ['D', 'B', 'G', 'D', 'G', 'D'],
-      openD: ['D', 'A', 'F#', 'D', 'A', 'D'],
-      nst: ['G', 'C', 'D', 'A', 'E', 'G']
-    };
-    let standardTuning = [...tuningPresets.standard];
+    const standardTuning = ['E', 'B', 'G', 'D', 'A', 'E'];
     const numFrets = 24;
 
     const SCALE_PATTERNS = {
@@ -491,15 +469,13 @@
       select.className = "tuning-select";
       select.dataset.string = stringIndex;
 
-      // Remove all children
       while (select.firstChild) select.removeChild(select.firstChild);
 
       ALL_NOTES.forEach(note => {
         const opt = document.createElement("option");
         opt.value = note;
         opt.textContent = note;
-        // Use the current tuning value for this string
-        if (note === standardTuning[stringIndex]) opt.selected = true;
+        if (note === defaultNote) opt.selected = true;
         select.appendChild(opt);
       });
       select.addEventListener("change", () => {
@@ -808,15 +784,6 @@ ${formatLine("E", shape.E)}
     });
 
     renderFretboard();
-
-    // Add event listener for preset tuning dropdown
-    document.getElementById("preset-tuning-select").addEventListener("change", (e) => {
-      const preset = e.target.value;
-      if (tuningPresets[preset]) {
-        standardTuning = [...tuningPresets[preset]];
-        renderFretboard();
-      }
-    });
 
     // Add reset button functionality
     document.getElementById("reset-fretboard").addEventListener("click", () => {
