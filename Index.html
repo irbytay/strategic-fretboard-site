@@ -320,6 +320,22 @@
       max-width: 80vw;
       object-fit: contain;
     }
+    .highlighted-link {
+      font-weight: 700;
+      color: #FFD700;
+      text-decoration: none;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background-color: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .highlighted-link:hover {
+      color: #fff;
+      background-color: #FFD700;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
@@ -360,7 +376,7 @@
     A visual map. A strategic tool. A new way to see the guitar.
   </span>
   <p class="section-note">
-    Brought to you by <a href="https://thestrategicowl.com" target="_blank" style="color: var(--highlight-color); text-decoration: none;">The Strategic Owl</a>
+    Brought to you by <a href="https://thestrategicowl.com" class="highlighted-link" target="_blank">The Strategic Owl</a>
   </p>
 
   <p class="section-paragraph">
