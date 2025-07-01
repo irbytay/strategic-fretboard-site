@@ -499,6 +499,8 @@
 
     const SHARP_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const FLAT_NOTES  = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+    // All notes with enharmonic equivalents shown together
+    const ALL_NOTES_ENHARMONIC = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B'];
     const tuningPresets = {
       standard: ['E', 'B', 'G', 'D', 'A', 'E'],
       halfStepDown: ['Eb', 'Bb', 'Gb', 'Db', 'Ab', 'Eb'],
@@ -552,22 +554,23 @@
     const fretboardEl = document.getElementById("fretboard");
 
     function createTuningSelect(stringIndex, defaultNote) {
-      const useFlats = document.getElementById("accidental-toggle")?.checked;
-      const ALL_NOTES = useFlats ? FLAT_NOTES : SHARP_NOTES;
-
       const select = document.createElement("select");
       select.className = "tuning-select";
       select.dataset.string = stringIndex;
 
-      // Remove all children
       while (select.firstChild) select.removeChild(select.firstChild);
 
-      ALL_NOTES.forEach(note => {
+      ALL_NOTES_ENHARMONIC.forEach(note => {
         const opt = document.createElement("option");
         opt.value = note;
         opt.textContent = note;
-        // Use the current tuning value for this string
-        if (note === standardTuning[stringIndex]) opt.selected = true;
+        if (
+          defaultNote === note ||
+          (defaultNote && note.includes(defaultNote)) ||
+          (defaultNote && defaultNote.includes(note))
+        ) {
+          opt.selected = true;
+        }
         select.appendChild(opt);
       });
       select.addEventListener("change", () => {
@@ -578,11 +581,12 @@
     }
 
     function getNoteAt(startNote, fret) {
-      const useFlats = document.getElementById("accidental-toggle")?.checked;
-      const ALL_NOTES = useFlats ? FLAT_NOTES : SHARP_NOTES;
-
-      const startIndex = ALL_NOTES.indexOf(startNote);
-      return ALL_NOTES[(startIndex + fret) % 12];
+      // Always use base note (if enharmonic) for index calculation
+      const baseNote = startNote.split('/')[0];
+      const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+      const index = NOTES.indexOf(baseNote);
+      const newIndex = (index + fret) % 12;
+      return ALL_NOTES_ENHARMONIC[newIndex];
     }
 
     // Chord shapes dictionary (root + type as key)
@@ -758,7 +762,9 @@
 
       for (let string = 0; string < 6; string++) {
         const tuning = document.querySelector(`select[data-string='${string}']`);
+        // Use only base note for indexing, but keep full label for display
         const tuningNote = tuning ? tuning.value : standardTuning[string];
+        const baseTuningNote = tuningNote.split('/')[0];
 
         const row = document.createElement("div");
         row.className = "string-row";
@@ -770,10 +776,13 @@
           const cell = document.createElement("div");
           cell.className = "note-cell";
           const note = getNoteAt(tuningNote, fret);
-          
-          const ALL_NOTES = useFlats ? FLAT_NOTES : SHARP_NOTES;
-          const rootIndex = ALL_NOTES.indexOf(rootNote);
-          const noteIndex = ALL_NOTES.indexOf(note);
+
+          // For interval calculation, use base note of root and note
+          const ALL_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+          const rootBase = rootNote ? rootNote.split('/')[0] : '';
+          const rootIndex = ALL_NOTES.indexOf(rootBase);
+          const noteBase = note.split('/')[0];
+          const noteIndex = ALL_NOTES.indexOf(noteBase);
           const semitoneFromRoot = useFlats
             ? (rootIndex - noteIndex + 12) % 12
             : (noteIndex - rootIndex + 12) % 12;
@@ -794,8 +803,6 @@
           } else {
             cell.textContent = showNote ? note : "";
           }
-
-
 
           row.appendChild(cell);
         }
