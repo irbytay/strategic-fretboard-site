@@ -19,7 +19,7 @@
     }
     .section-title {
       font-size: 1.6rem;
-      font-family: 'Exo 2', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       color: var(--highlight-color);
       margin-top: 1rem;
     }
@@ -30,32 +30,32 @@
       line-height: 1.6;
       font-size: 1.1rem;
       color: #ffffff;
-      font-family: 'Merriweather', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
     }
 
     .section-note {
       font-size: 0.9rem;
       color: #FFD700;
       font-weight: bold;
-      font-family: 'Playfair Display', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
     }
 
     .section-note-muted {
       font-size: 0.85rem;
       color: #aaa;
-      font-family: 'Merriweather', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
     }
 
     .section-note-more-muted {
       font-size: 0.8rem;
       color: #888;
-      font-family: 'Merriweather', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
     }
 
     .section-subdued {
       font-size: 1rem;
       color: #ccc;
-      font-family: 'Merriweather', sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
     }
 
     .section-list {
@@ -375,7 +375,9 @@
   </script>
 </head>
 <body>
-  <header class="gold-title">The Strategic Fretboard</header>
+  <div class="logo-container">
+    <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
+  </div>
 
   <span class="exo-tagline">
     A visual map. A strategic tool. A new way to see the guitar.
@@ -750,3 +752,18 @@ ${formatLine("E", shape.E)}
     });
   </script>
 </html>
+
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .logo-image {
+      max-width: 100%;
+      height: auto;
+      max-height: 120px;
+      object-fit: contain;
+    }
