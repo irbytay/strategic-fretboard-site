@@ -129,7 +129,6 @@
         }
 
         const email = user.email;
-        console.log("Logged in as:", user.email);
 
         // Fetch subscriber data from Supabase (encode email for URL safety)
         fetch(`https://gopyzkcmvkbusdnwjlbb.supabase.co/rest/v1/subscribers?email=eq.${encodeURIComponent(email)}`, {
@@ -143,33 +142,13 @@
             return res.json();
           })
           .then(data => {
-            console.log("Supabase subscriber query result:", data);
             const subscriber = data[0];
-            console.log("🔍 Checking subscriber object for:", email);
-            if (!subscriber) {
-              console.warn("⚠️ No subscriber data found for this email.");
-              document.getElementById("error-message").textContent = "⚠️ No active subscription found for " + email;
-              document.getElementById("error-message").style.display = "block";
-              stripeLink.style.display = "block";
-            } else if (subscriber.status === "active") {
-              console.log("✅ Subscription is active for:", email);
-              if (subscriber.type === "trial") {
-                console.log("🟡 User is on free trial.");
-              } else if (subscriber.type === "paid") {
-                console.log("🟢 User is a full subscriber.");
-              }
+            if (subscriber && subscriber.status === "active") {
               fretLink.style.display = "block";
-            } else {
-              document.getElementById("error-message").textContent = "⚠️ Subscription is not active for " + email;
-              document.getElementById("error-message").style.display = "block";
-              stripeLink.style.display = "block";
             }
           })
-          .catch(err => {
-            console.error("Error checking subscription:", err);
-            document.getElementById("error-message").textContent = "⚠️ Unable to validate your subscription. Please try again.";
-            document.getElementById("error-message").style.display = "block";
-            stripeLink.style.display = "block";
+          .catch(() => {
+            // Do nothing on error
           });
       });
 
@@ -184,14 +163,16 @@
   <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
   <header>Thank You for Your Purchase</header>
   <p>
-  Welcome to the Strategic Fretboard — and thank you for stepping into something truly different. This project isn’t a company or a content farm — it’s a one-person mission to build the most intuitive, empowering guitar tool on the internet.
-  <br /><br />
-  If you just made a purchase, I’m personally verifying all new subscriptions. Please forward your receipt or confirmation, along with your name and the email you used at checkout, to the address below. I’ll unlock your access as quickly as I can.
-  <br /><br />
-  📧 Email: <strong>team@strategicfretboard.com</strong>
-  <br /><br />
-  Thanks for your patience — and your belief in this grassroots, gold-standard vision.
-</p>
+    Thank you for your purchase — and welcome to The Strategic Fretboard. This isn’t a company or a content farm — it’s a one-person project built to give guitarists a smarter, more intuitive way to see the fretboard.
+    <br /><br />
+    Because of that independence, I don’t have a fully automated system (yet) to connect Stripe purchases directly with Supabase access. So, if you just bought the tool, please send me a quick email confirming your purchase.
+    <br /><br />
+    📧 Email: <strong>team@strategicfretboard.com</strong>
+    <br /><br />
+    Just include your name and the email you used at checkout. Once I receive your message, I’ll manually activate your access — usually within a few hours (or quicker if I’m online).
+    <br /><br />
+    Thanks again for supporting this grassroots project — and for believing in the vision.
+  </p>
   <div style="margin-top: 2rem;">
     <a href="/home.html" style="background: linear-gradient(145deg, #FFD700, #B8860B); color: #0D1B2A; padding: 0.75rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; box-shadow: 0 4px 10px rgba(212,175,55,0.3); font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.8px; text-transform: uppercase; display: inline-block;">
       Back to Strategic Fretboard
