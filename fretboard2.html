@@ -360,6 +360,19 @@
       0 0 10px rgba(255, 255, 150, 0.8),
       0 0 20px rgba(255, 255, 150, 0.6);
   }
+    .tuning-reference-container {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  #tuning-reference-select {
+    max-width: 90%;
+  }
+}
   </style>
 </head>
 <body>
@@ -422,7 +435,7 @@
   <div id="step-info" style="margin: 12px 0 6px; font-size: 0.9rem; color: #fff;"></div>
   <div id="scale-steps" style="margin: 0 0 10px; font-size: 0.85rem; color: #aaa;"></div>
   <div id="scale-sequence" style="margin: 4px 0 12px; font-size: 0.85rem; color: #ddd;"></div>
-  <!-- Tuning Reference Dropdown and Display -->
+  <div class="tuning-reference-container">
   <label style="margin: 16px 0 8px;">
     Tuning Reference:
     <select id="tuning-reference-select">
@@ -430,6 +443,7 @@
     </select>
   </label>
   <div id="tuning-reference-display" style="margin: 10px 0 18px; font-size: 1.1rem; font-weight: bold; color: #FFD700;"></div>
+</div>
   <div class="reset-container" style="margin-top: 8px;">
     <button id="reset-fretboard">⟳ RESET FRETBOARD</button>
   </div>
