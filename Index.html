@@ -341,6 +341,20 @@
   visibility: visible;
   opacity: 1;
 }
+     .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .logo-image {
+      max-width: 420px;
+      height: auto;
+      max-height: 100px;
+      object-fit: contain;
+    }
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
@@ -753,17 +767,4 @@ ${formatLine("E", shape.E)}
   </script>
 </html>
 
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    .logo-image {
-      max-width: 420px;
-      height: auto;
-      max-height: 100%;
-      object-fit: contain;
-    }
+   
