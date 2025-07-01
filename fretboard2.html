@@ -300,11 +300,37 @@
       transform: scale(1.04);
       box-shadow: 0 8px 18px rgba(255, 215, 0, 0.45);
     }
+</style>
+  <style>
+  .strategic-owl-credit {
+    margin-top: 12px;
+    margin-bottom: 18px;
+    font-size: 1rem;
+    color: #bbb;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .strategic-owl-credit a {
+    color: #FFD700;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.6), 0 0 12px rgba(255, 215, 0, 0.4);
+  }
+
+  .strategic-owl-credit a:hover {
+    color: #FCD53F;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 16px rgba(255, 215, 0, 0.6);
+  }
   </style>
 </head>
 <body>
    <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
-  
+
+  <p class="strategic-owl-credit">
+    <a href="https://thestrategicowl.com" target="_blank" rel="noopener noreferrer">Brought to you by The Strategic Owl</a>
+  </p>
+
   <label style="margin: 12px 0;">
     Select Root:
     <select id="root-select">
