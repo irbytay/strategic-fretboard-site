@@ -442,6 +442,67 @@
     const SHARP_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const FLAT_NOTES  = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
     const standardTuning = ['E', 'B', 'G', 'D', 'A', 'E'];
+    const TUNINGS = {
+  "All Fifths / Mandoguitar": ["C", "G", "D", "A", "E", "B"],
+  "All Fourths": ["E", "A", "D", "G", "C", "F"],
+  "Augmented Fourths (B–F)": ["B", "F", "B", "F", "B", "F"],
+  "Augmented Fourths (C–F)": ["C", "F", "C", "F", "C", "F"],
+  "C Standard": ["C", "F", "A#/Bb", "D#/Eb", "G", "C"],
+  "C# Standard / Db": ["C#/Db", "F#/Gb", "B", "E", "G#/Ab", "C#/Db"],
+  "C6": ["C", "A", "C", "G", "C", "E"],
+  "CGCGCE": ["C", "G", "C", "G", "C", "E"],
+  "D Standard": ["D", "G", "C", "F", "A", "D"],
+  "D# Standard / Eb": ["D#/Eb", "G#/Ab", "C#/Db", "F#/Gb", "A#/Bb", "D#/Eb"],
+  "DADF#AD": ["D", "A", "D", "F#/Gb", "A", "D"],
+  "DADGAD": ["D", "A", "D", "G", "A", "D"],
+  "DGDGBD": ["D", "G", "D", "G", "B", "D"],
+  "Double Drop D": ["D", "A", "D", "G", "B", "D"],
+  "Drop A": ["A", "E", "A", "D", "F#/Gb", "B"],
+  "Drop A#": ["A#/Bb", "F", "A#/Bb", "D#/Eb", "G", "C"],
+  "Drop B": ["B", "F#/Gb", "B", "E", "G#/Ab", "C#/Db"],
+  "Drop C": ["C", "G", "C", "F", "A", "D"],
+  "Drop C#": ["C#/Db", "G#/Ab", "C#/Db", "F#/Gb", "A#/Bb", "D#/Eb"],
+  "Drop D": ["D", "A", "D", "G", "B", "E"],
+  "Drop D#": ["D#/Eb", "A#/Bb", "D#/Eb", "G#/Ab", "C", "F"],
+  "Drop E": ["E", "B", "E", "A", "C#/Db", "F#/Gb"],
+  "E Standard": ["E", "A", "D", "G", "B", "E"],
+  "Eb Minor": ["Eb/D#", "Bb/A#", "Eb/D#", "Gb/F#", "Bb/A#", "Eb/D#"],
+  "F Standard": ["F", "A#/Bb", "D#/Eb", "G#/Ab", "C", "F"],
+  "F# Standard / Gb": ["F#/Gb", "B", "E", "A", "C#/Db", "F#/Gb"],
+  "G Modal": ["D", "G", "D", "G", "A", "D"],
+  "G Standard": ["G", "C", "F", "A#/Bb", "D", "G"],
+  "G6": ["D", "G", "D", "G", "B", "E"],
+  "Major Thirds": ["C", "E", "G#/Ab", "C", "E", "G#/Ab"],
+  "New Standard": ["C", "G", "D", "A", "E", "G"],
+  "Open A": ["E", "A", "E", "A", "C#/Db", "E"],
+  "Open A Minor": ["E", "A", "E", "A", "C", "E"],
+  "Open B": ["B", "F#/Gb", "B", "F#/Gb", "B", "D#/Eb"],
+  "Open C": ["C", "G", "C", "G", "C", "E"],
+  "Open C Minor": ["C", "G", "C", "G", "C", "D#/Eb"],
+  "Open D": ["D", "A", "D", "F#/Gb", "A", "D"],
+  "Open D Minor": ["D", "A", "D", "F", "A", "D"],
+  "Open E": ["E", "B", "E", "G#/Ab", "B", "E"],
+  "Open E Minor": ["E", "B", "E", "G", "B", "E"],
+  "Open F": ["F", "C", "F", "A", "C", "F"],
+  "Open F Minor": ["F", "C", "F", "G#/Ab", "C", "F"],
+  "Open G": ["D", "G", "D", "G", "B", "D"],
+  "Open G Minor": ["D", "G", "D", "G", "A#/Bb", "D"],
+  "Open Ab": ["Eb/D#", "Ab/G#", "Eb/D#", "Ab/G#", "C", "Eb/D#"],
+  "Open Bb Minor": ["Bb/A#", "F", "Bb/A#", "Db/C#", "F", "Bb/A#"],
+  "Open Ab Minor": ["Ab/G#", "Eb/D#", "Ab/G#", "B", "Eb/D#", "Ab/G#"],
+  "Ostrich Tuning (C)": ["C", "C", "C", "C", "C", "C"],
+  "Ostrich Tuning (E)": ["E", "E", "E", "E", "E", "E"],
+  "Minor Sixth": ["E", "C", "A", "F", "C", "E"],
+  "Spanish Tuning": ["D", "G", "C", "F", "A", "D"],
+  "Reentrant G": ["G", "B", "D", "G", "B", "D"],
+  "Nashville Tuning": ["E", "A", "D", "G", "B", "E (12-string high)"],
+  "Half-Step Down": ["D#/Eb", "G#/Ab", "C#/Db", "F#/Gb", "A#/Bb", "D#/Eb"],
+  "1 Step Down": ["D", "G", "C", "F", "A", "D"],
+  "1.5 Steps Down": ["C#/Db", "F#/Gb", "B", "E", "G#/Ab", "C#/Db"],
+  "2 Steps Down": ["C", "F", "A#/Bb", "D#/Eb", "G", "C"],
+  "Baritone Standard": ["B", "E", "A", "D", "F#/Gb", "B"],
+  "Baritone Drop A": ["A", "E", "A", "D", "F#/Gb", "B"]
+};
     const numFrets = 24;
 
     const SCALE_PATTERNS = {
@@ -822,3 +883,4 @@ ${formatLine("E", shape.E)}
     });
   </script>
 </html>
+S
