@@ -132,14 +132,14 @@
       background-color: #553770; /* dim violet */
     }
 
-    .fret-marker {
+    /* .fret-marker {
       position: absolute;
       bottom: 3px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 0.75rem;
       color: var(--highlight-color);
-    }
+    } */
 
     select.tuning-select {
       width: 60px;
@@ -703,12 +703,7 @@
             cell.textContent = showNote ? note : "";
           }
 
-          if ([0, 3, 5, 7, 9, 12, 15, 17, 19, 21, 24].includes(fret)) {
-            const dot = document.createElement("div");
-            dot.className = "fret-marker";
-            dot.textContent = "•";
-            cell.appendChild(dot);
-          }
+
 
           row.appendChild(cell);
         }
