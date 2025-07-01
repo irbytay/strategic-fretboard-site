@@ -522,6 +522,7 @@
       const select = document.createElement("select");
       select.className = "tuning-select";
       select.dataset.string = stringIndex;
+      select.value = defaultNote;
 
       while (select.firstChild) select.removeChild(select.firstChild);
 
@@ -529,9 +530,9 @@
         const opt = document.createElement("option");
         opt.value = note;
         opt.textContent = note;
-        if (note === defaultNote) opt.selected = true;
         select.appendChild(opt);
       });
+      select.value = defaultNote;
       select.addEventListener("change", () => {
         standardTuning[stringIndex] = select.value;
         renderFretboard();
@@ -837,6 +838,9 @@ ${formatLine("E", shape.E)}
     document.getElementById("tuning-select").addEventListener("change", (e) => {
       currentTuningName = e.target.value;
       standardTuning = TUNINGS[currentTuningName];
+      for (let i = 0; i < 6; i++) {
+        document.querySelector(`select[data-string='${i}']`).value = standardTuning[i];
+      }
       renderFretboard();
     });
 
