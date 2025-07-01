@@ -52,27 +52,7 @@
       font-family: 'Exo 2', sans-serif;
     }
 
-    .section-subdued {
-      font-size: 1rem;
-      color: #ccc;
-      font-family: 'Exo 2', sans-serif;
-    }
-
-    .section-list {
-      font-size: 1rem;
-      color: #ccc;
-      list-style: disc;
-      padding-left: 1.5rem;
-      margin-top: 0;
-      font-family: 'Exo 2', sans-serif;
-    }
-
-    .section-paragraph-muted {
-      color: #aaa;
-      font-size: 0.9rem;
-      margin-top: 1rem;
-      font-family: 'Exo 2', sans-serif;
-    }
+    /* .section-subdued, .section-list, .section-paragraph-muted removed: unused */
     :root {
       --fret-color: #ccc;
       --string-color: #aaa;
@@ -191,14 +171,7 @@
       color: var(--highlight-color);
     }
 
-    select.tuning-select {
-      width: 60px;
-      background: #1A2B4C;
-      color: white;
-      border: none;
-      padding: 5px;
-      font-weight: bold;
-    }
+    /* select.tuning-select removed: tuning is fixed */
 
     @media (max-width: 768px) {
       .note-cell {
@@ -429,16 +402,16 @@
 
   <hr style="margin-top: 2rem; border: 0; height: 1px; background: #444;" />
   <h2 class="section-title">Preview the Fretboard</h2>
-  <p class="section-subdued">This is your starting point — a simplified version of the full Strategic Fretboard system.</p>
-  <ul class="section-list">
+  <p style="font-size: 1rem; color: #ccc; font-family: 'Exo 2', sans-serif;">This is your starting point — a simplified version of the full Strategic Fretboard system.</p>
+  <ul style="font-size: 1rem; color: #ccc; list-style: disc; padding-left: 1.5rem; margin-top: 0; font-family: 'Exo 2', sans-serif;">
     <li>Built on standard tuning</li>
     <li>Visualizes the Major scale across 24 frets</li>
     <li>Designed to help your brain form mental pathways through the fretboard</li>
   </ul>
-  <p class="section-paragraph-muted">
+  <p style="color: #aaa; font-size: 0.9rem; margin-top: 1rem; font-family: 'Exo 2', sans-serif;">
     This preview introduces you to the concept — a tool that combines musical theory, guitar structure, and cognitive mapping to help players expand not just their playing, but their thinking.
   </p>
-  <p class="section-paragraph-muted">
+  <p style="color: #aaa; font-size: 0.9rem; margin-top: 1rem; font-family: 'Exo 2', sans-serif;">
     The full version unlocks custom tunings, scale modes, chord overlays, interval identification, and deeper customization for players who want to build fluency, not just familiarity.
   </p>
   
@@ -710,7 +683,6 @@ ${formatLine("E", shape.E)}
       }
     }
 
-    // document.getElementById("accidental-toggle").addEventListener("change", renderFretboard);
     document.getElementById("root-select").addEventListener("change", renderFretboard);
 
     renderFretboard();
@@ -718,7 +690,6 @@ ${formatLine("E", shape.E)}
     // Add reset button functionality
     document.getElementById("reset-fretboard").addEventListener("click", () => {
       document.getElementById("root-select").selectedIndex = 0;
-      // document.getElementById("accidental-toggle").checked = false;
       renderFretboard();
     });
   </script>
