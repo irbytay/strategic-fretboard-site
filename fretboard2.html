@@ -422,6 +422,14 @@
   <div id="step-info" style="margin: 12px 0 6px; font-size: 0.9rem; color: #fff;"></div>
   <div id="scale-steps" style="margin: 0 0 10px; font-size: 0.85rem; color: #aaa;"></div>
   <div id="scale-sequence" style="margin: 4px 0 12px; font-size: 0.85rem; color: #ddd;"></div>
+  <!-- Tuning Reference Dropdown and Display -->
+  <label style="margin: 16px 0 8px;">
+    Tuning Reference:
+    <select id="tuning-reference-select">
+      <option value="">-- Select a Tuning --</option>
+    </select>
+  </label>
+  <div id="tuning-reference-display" style="margin: 10px 0 18px; font-size: 1.1rem; font-weight: bold; color: #FFD700;"></div>
   <div class="reset-container" style="margin-top: 8px;">
     <button id="reset-fretboard">⟳ RESET FRETBOARD</button>
   </div>
@@ -854,6 +862,26 @@ ${formatLine("E", shape.E)}
       document.getElementById("scale-type-select").selectedIndex = 0;
       document.getElementById("accidental-toggle").checked = false;
       renderFretboard();
+    });
+    // Tuning Reference Dropdown Logic
+    const tuningRefSelect = document.getElementById("tuning-reference-select");
+    const tuningRefDisplay = document.getElementById("tuning-reference-display");
+
+    // Populate tuning reference options
+    Object.keys(TUNINGS).forEach(tuningName => {
+      const opt = document.createElement("option");
+      opt.value = tuningName;
+      opt.textContent = tuningName;
+      tuningRefSelect.appendChild(opt);
+    });
+
+    tuningRefSelect.addEventListener("change", () => {
+      const selected = tuningRefSelect.value;
+      if (TUNINGS[selected]) {
+        tuningRefDisplay.textContent = `${selected}: ${TUNINGS[selected].join(" — ")}`;
+      } else {
+        tuningRefDisplay.textContent = "";
+      }
     });
   </script>
   
