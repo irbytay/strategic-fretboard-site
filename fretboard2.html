@@ -82,7 +82,7 @@
 
     .string-row {
       display: grid;
-      grid-template-columns: 60px repeat(24, 42px);
+      grid-template-columns: 60px repeat(25, 42px);
     }
 
     .string-label {
@@ -168,7 +168,7 @@
 
     .fret-numbers {
       display: grid;
-      grid-template-columns: 60px repeat(24, 42px);
+      grid-template-columns: 60px repeat(25, 42px);
       margin-bottom: 0;
       margin-top: 0;
       padding: 0 0 4px 0;
@@ -609,10 +609,10 @@
       const fretNumContainer = document.querySelector(".fret-numbers");
       fretNumContainer.innerHTML = "";
       fretNumContainer.appendChild(document.createElement("span")); // spacer for tuning column
-      for (let fret = 1; fret <= numFrets; fret++) {
+      for (let fret = 0; fret <= numFrets; fret++) {
         const label = document.createElement("span");
         label.textContent = fret;
-        if ([3, 5, 7, 9, 12, 15, 17, 19, 21, 24].includes(fret)) {
+        if ([0, 3, 5, 7, 9, 12, 15, 17, 19, 21, 24].includes(fret)) {
           label.classList.add("dot-fret");
         }
         fretNumContainer.appendChild(label);
@@ -668,7 +668,7 @@
         const tuningSelect = createTuningSelect(string, tuningNote);
         row.appendChild(tuningSelect);
 
-        for (let fret = 1; fret <= numFrets; fret++) {
+        for (let fret = 0; fret <= numFrets; fret++) {
           const cell = document.createElement("div");
           cell.className = "note-cell";
           const note = getNoteAt(tuningNote, fret);
@@ -697,7 +697,7 @@
             cell.textContent = showNote ? note : "";
           }
 
-          if ([3, 5, 7, 9, 12, 15, 17, 19, 21, 24].includes(fret)) {
+          if ([0, 3, 5, 7, 9, 12, 15, 17, 19, 21, 24].includes(fret)) {
             const dot = document.createElement("div");
             dot.className = "fret-marker";
             dot.textContent = "•";
@@ -716,7 +716,7 @@
       dotRow.style.height = "18px"; // Slightly taller for visual clarity
       dotRow.appendChild(document.createElement("div")); // spacer
 
-      for (let fret = 1; fret <= numFrets; fret++) {
+      for (let fret = 0; fret <= numFrets; fret++) {
         const dotCell = document.createElement("div");
         dotCell.style.position = "relative";
 
