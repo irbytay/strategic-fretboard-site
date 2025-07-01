@@ -368,6 +368,7 @@
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
+    // 1. On init, check subscriber status
     netlifyIdentity.on("init", user => {
       if (user && user.email) {
         const email = user.email;
@@ -391,11 +392,13 @@
       }
     });
 
+    // 2. On login, redirect to home.html
     netlifyIdentity.on("login", () => {
-      window.location.href = "/home.html";
+      window.location.href = "home.html";
     });
 
-    netlifyIdentity.init()     
+    // 3. Only call init once, at the end
+    netlifyIdentity.init();
   </script>
 </head>
 <body>
@@ -746,22 +749,7 @@ ${formatLine("E", shape.E)}
     © 2025 Strategic Fretboard. All rights reserved. This tool is protected under U.S. copyright law. Unauthorized duplication or distribution is prohibited. Created by Taylor Irby — designed for thinkers, built for players.
   </p>
 </body>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    netlifyIdentity.on("logout", () => {
-      window.location.href = "/";
-    });
-
-    netlifyIdentity.init();
-
-    netlifyIdentity.on("init", user => {
-      if (!user) {
-        netlifyIdentity.on("login", () => {
-          document.location.href = "home.html";
-        });
-      }
-    });
-  </script>
+  <!-- Netlify identity script already included and initialized above -->
 </html> 
 
    
