@@ -365,34 +365,6 @@
    <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
 
   <label style="margin: 12px 0;">
-    Select Tuning:
-    <select id="tuning-select">
-      <option value="Standard">Standard</option>
-      <option value="DropD">Drop D</option>
-      <option value="HalfStepDown">Half-Step Down</option>
-      <option value="DADGAD">DADGAD</option>
-      <option value="OpenG">Open G</option>
-      <option value="OpenD">Open D</option>
-      <option value="OpenE">Open E</option>
-      <option value="OpenA">Open A</option>
-      <option value="OpenC">Open C</option>
-      <option value="OpenF">Open F</option>
-      <option value="DropC">Drop C</option>
-      <option value="DropB">Drop B</option>
-      <option value="DropA">Drop A</option>
-      <option value="CStandard">C Standard</option>
-      <option value="BStandard">B Standard</option>
-      <option value="AStandard">A Standard</option>
-      <option value="DoubleDropD">Double Drop D</option>
-      <option value="OpenDm">Open Dm</option>
-      <option value="OpenC6">Open C6</option>
-      <option value="MinorThirds">Minor Thirds</option>
-      <option value="AllFourths">All Fourths</option>
-      <option value="MajorThirds">Major Thirds</option>
-      <option value="NST">New Standard Tuning (NST)</option>
-    </select>
-  </label>
-  <label style="margin: 12px 0;">
     Select Root:
     <select id="root-select">
       <option value="">-- Root --</option>
@@ -438,9 +410,9 @@
   <div class="help-icon" tabindex="0">🦉</div>
   <div class="help-tooltip">
     <strong>How to Use:</strong><br>
-    1. Select a Tuning (or adjust individual strings)<br>
-    2. Select Root & Scale<br>
-    3. Toggle Descending Mode (flats) if desired<br>
+    1. Select Root & Scale<br>
+    2. Toggle Descending Mode (flats)<br>
+    3. Adjust tuning (left side)<br>
     4. Notes highlight as:<br>
     &nbsp;&nbsp;&nbsp;• <span style="color:#2e7031;">R</span> = Root<br>
     &nbsp;&nbsp;&nbsp;• <span style="color:#3e4c75;">M3/m3</span> = Major/Minor 3rd<br>
@@ -466,34 +438,7 @@
   <script>
     const SHARP_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const FLAT_NOTES  = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
-    const TUNINGS = {
-      Standard: ['E', 'B', 'G', 'D', 'A', 'E'],
-      DropD: ['E', 'B', 'G', 'D', 'A', 'D'],
-      HalfStepDown: ['Eb', 'Bb', 'Gb', 'Db', 'Ab', 'Eb'],
-      FullStepDown: ['D', 'A', 'F', 'C', 'G', 'D'],
-      DropC: ['D', 'A', 'F', 'C', 'G', 'C'],
-      DropB: ['C#', 'G#', 'F#', 'D', 'A', 'B'],
-      DropA: ['B', 'F#', 'E', 'C#', 'G#', 'A'],
-      DoubleDropD: ['D', 'B', 'G', 'D', 'A', 'D'],
-      DADGAD: ['D', 'A', 'G', 'D', 'A', 'D'],
-      OpenD: ['D', 'A', 'F#', 'D', 'A', 'D'],
-      OpenE: ['E', 'B', 'G#', 'E', 'B', 'E'],
-      OpenG: ['D', 'B', 'G', 'D', 'G', 'D'],
-      OpenA: ['E', 'A', 'C#', 'E', 'A', 'E'],
-      OpenC: ['C', 'G', 'C', 'G', 'C', 'E'],
-      OpenF: ['F', 'A', 'C', 'F', 'C', 'F'],
-      OpenDm: ['D', 'A', 'F', 'D', 'A', 'D'],
-      OpenC6: ['C', 'A', 'C', 'G', 'C', 'E'],
-      CStandard: ['C', 'G', 'D#', 'A#', 'F', 'C'],
-      BStandard: ['B', 'F#', 'D', 'A', 'E', 'B'],
-      AStandard: ['A', 'E', 'C', 'G', 'D', 'A'],
-      AllFourths: ['F', 'C', 'G', 'D', 'A', 'E'],
-      MinorThirds: ['G', 'E', 'C#', 'A', 'F#', 'D'],
-      MajorThirds: ['C', 'G#', 'E', 'C', 'G#', 'E'],
-      NST: ['G', 'E', 'A', 'D', 'G', 'C']
-    };
-    let currentTuningName = 'Standard';
-    let standardTuning = TUNINGS[currentTuningName];
+    const standardTuning = ['E', 'B', 'G', 'D', 'A', 'E'];
     const numFrets = 24;
 
     const SCALE_PATTERNS = {
@@ -522,7 +467,6 @@
       const select = document.createElement("select");
       select.className = "tuning-select";
       select.dataset.string = stringIndex;
-      select.value = defaultNote;
 
       while (select.firstChild) select.removeChild(select.firstChild);
 
@@ -530,9 +474,9 @@
         const opt = document.createElement("option");
         opt.value = note;
         opt.textContent = note;
+        if (note === defaultNote) opt.selected = true;
         select.appendChild(opt);
       });
-      select.value = defaultNote;
       select.addEventListener("change", () => {
         standardTuning[stringIndex] = select.value;
         renderFretboard();
@@ -835,14 +779,6 @@ ${formatLine("E", shape.E)}
     document.getElementById("accidental-toggle").addEventListener("change", renderFretboard);
     document.getElementById("root-select").addEventListener("change", renderFretboard);
     document.getElementById("scale-type-select").addEventListener("change", renderFretboard); 
-    document.getElementById("tuning-select").addEventListener("change", (e) => {
-      currentTuningName = e.target.value;
-      standardTuning = TUNINGS[currentTuningName];
-      for (let i = 0; i < 6; i++) {
-        document.querySelector(`select[data-string='${i}']`).value = standardTuning[i];
-      }
-      renderFretboard();
-    });
 
     renderFretboard();
 
