@@ -112,7 +112,7 @@
     }
 
     /* Thicker left border for the 1st fret across all strings */
-    .string-row .note-cell:nth-child(3) {
+    .string-row .note-cell:nth-child(2) {
       border-left: 3px solid var(--fret-color);
     }
 
@@ -365,6 +365,29 @@
    <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
 
   <label style="margin: 12px 0;">
+    Select Tuning:
+    <select id="tuning-select">
+      <option value="Standard">Standard</option>
+      <option value="DropD">Drop D</option>
+      <option value="HalfStepDown">Half-Step Down</option>
+      <option value="DADGAD">DADGAD</option>
+      <option value="OpenG">Open G</option>
+      <option value="OpenD">Open D</option>
+    </select>
+  </label>
+  <label style="margin: 12px 0;">
+    Or Choose from Presets:
+    <select id="preset-tuning-select">
+      <option value="">-- Select Preset --</option>
+      <option value="Standard">Standard</option>
+      <option value="DropD">Drop D</option>
+      <option value="HalfStepDown">Half-Step Down</option>
+      <option value="DADGAD">DADGAD</option>
+      <option value="OpenG">Open G</option>
+      <option value="OpenD">Open D</option>
+    </select>
+  </label>
+  <label style="margin: 12px 0;">
     Select Root:
     <select id="root-select">
       <option value="">-- Root --</option>
@@ -438,7 +461,16 @@
   <script>
     const SHARP_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
     const FLAT_NOTES  = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
-    const standardTuning = ['E', 'B', 'G', 'D', 'A', 'E'];
+    const TUNINGS = {
+      Standard: ['E', 'B', 'G', 'D', 'A', 'E'],
+      DropD: ['E', 'B', 'G', 'D', 'A', 'D'],
+      HalfStepDown: ['Eb', 'Bb', 'Gb', 'Db', 'Ab', 'Eb'],
+      DADGAD: ['D', 'A', 'G', 'D', 'A', 'D'],
+      OpenG: ['D', 'B', 'G', 'D', 'G', 'D'],
+      OpenD: ['D', 'A', 'F#', 'D', 'A', 'D']
+    };
+    let currentTuningName = 'Standard';
+    let standardTuning = TUNINGS[currentTuningName];
     const numFrets = 24;
 
     const SCALE_PATTERNS = {
@@ -779,6 +811,18 @@ ${formatLine("E", shape.E)}
     document.getElementById("accidental-toggle").addEventListener("change", renderFretboard);
     document.getElementById("root-select").addEventListener("change", renderFretboard);
     document.getElementById("scale-type-select").addEventListener("change", renderFretboard); 
+    document.getElementById("tuning-select").addEventListener("change", (e) => {
+      currentTuningName = e.target.value;
+      standardTuning = TUNINGS[currentTuningName];
+      renderFretboard();
+    });
+    document.getElementById("preset-tuning-select").addEventListener("change", (e) => {
+      if (!e.target.value) return;
+      document.getElementById("tuning-select").value = e.target.value;
+      currentTuningName = e.target.value;
+      standardTuning = TUNINGS[currentTuningName];
+      renderFretboard();
+    });
 
     renderFretboard();
 
