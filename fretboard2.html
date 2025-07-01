@@ -731,14 +731,13 @@ ${formatLine("E", shape.E)}
     });
   </script>
   
-</body>
   <div class="logout-container">
     <button class="styled-logout-button" onclick="netlifyIdentity.logout()">Log Out</button>
   </div>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     netlifyIdentity.on("logout", () => {
-      window.location.href = "/";
+      window.location.href = "/index.html";
     });
 
     netlifyIdentity.init();
@@ -751,4 +750,5 @@ ${formatLine("E", shape.E)}
       }
     });
   </script>
+</body>
 </html>
