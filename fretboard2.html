@@ -470,16 +470,31 @@
   <div id="selected-chord" style="margin-top: 20px; font-size: 1.1rem; color: var(--highlight-color); font-weight: bold;"></div>
 
   <script>
-    const FLAT_TO_SHARP = {
+    const NOTE_EQUIVALENTS = {
       "Bb": "A#",
+      "A#": "Bb",
       "Eb": "D#",
+      "D#": "Eb",
       "Ab": "G#",
+      "G#": "Ab",
       "Db": "C#",
-      "Gb": "F#"
+      "C#": "Db",
+      "Gb": "F#",
+      "F#": "Gb"
     };
 
-    function normalizeFlatsToSharps(tuningArray) {
-      return tuningArray.map(note => FLAT_TO_SHARP[note] || note);
+    function normalizeNote(note, useFlats = false) {
+      if (useFlats && NOTE_EQUIVALENTS[note] && note.includes("#")) {
+        return NOTE_EQUIVALENTS[note]; // Sharp to flat
+      }
+      if (!useFlats && NOTE_EQUIVALENTS[note] && note.includes("b")) {
+        return NOTE_EQUIVALENTS[note]; // Flat to sharp
+      }
+      return note;
+    }
+
+    function normalizeTuningArray(tuningArray, useFlats = false) {
+      return tuningArray.map(note => normalizeNote(note, useFlats));
     }
 
     const SHARP_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
@@ -868,7 +883,7 @@ ${formatLine("E", shape.E)}
       if (tuningPresets[preset]) {
         const useFlats = document.getElementById("accidental-toggle")?.checked;
         const rawTuning = tuningPresets[preset];
-        standardTuning = useFlats ? rawTuning : normalizeFlatsToSharps(rawTuning);
+        standardTuning = normalizeTuningArray(rawTuning, useFlats);
         renderFretboard();
       }
     });
