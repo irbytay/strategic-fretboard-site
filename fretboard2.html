@@ -260,6 +260,30 @@
   opacity: 1;
 }
     .logo-image {
+  .logout-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  .styled-logout-button {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #222, #555);
+    color: var(--highlight-color);
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+    font-size: 1rem;
+    transition: background 0.3s;
+  }
+
+  .styled-logout-button:hover {
+    background: #333;
+  }
   display: block;
   width: 360px;
   height: auto;
@@ -271,11 +295,6 @@
   </style>
 </head>
 <body>
-  <div style="text-align: right; padding: 10px 20px; width: 100%;">
-    <button onclick="netlifyIdentity.logout()" style="padding: 8px 14px; font-size: 1rem; background-color: #FF4C4C; color: white; border: none; border-radius: 6px; cursor: pointer;">
-      Log Out
-    </button>
-  </div>
    <img src="logo.png" alt="The Strategic Fretboard Logo" class="logo-image" />
   
   <label style="margin: 12px 0;">
@@ -704,6 +723,9 @@ ${formatLine("E", shape.E)}
       renderFretboard();
     });
   </script>
+  <div class="logout-container">
+    <button class="styled-logout-button" onclick="netlifyIdentity.logout()">Log Out</button>
+  </div>
 </body>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
