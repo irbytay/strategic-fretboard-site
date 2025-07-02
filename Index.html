@@ -377,6 +377,9 @@
     .tos-popup {
       position: relative;
       display: inline-block;
+    }
+
+    .popup-label {
       cursor: pointer;
       color: #FFD700;
       text-decoration: underline;
@@ -404,17 +407,6 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       font-size: 0.9rem;
       z-index: 9999;
-    }
-
-    .tos-popup:hover .tos-content,
-    .tos-popup.show .tos-content {
-      display: block;
-    }
-
-    @media (hover: none) {
-      .tos-popup:hover .tos-content {
-        display: none;
-      }
     }
 
     .policy-row {
@@ -884,8 +876,8 @@ ${formatLine("E", shape.E)}
   </script>
   <div class="policy-row">
     <div style="margin-right: 1rem; white-space: nowrap;">
-      <div class="tos-popup" onclick="this.classList.toggle('show')">
-        Intellectual Property Notice
+      <div class="tos-popup">
+        <div class="popup-label">Intellectual Property Notice</div>
         <div class="tos-content">
           <strong>INTELLECTUAL PROPERTY NOTICE</strong><br><br>
 
@@ -912,8 +904,8 @@ ${formatLine("E", shape.E)}
       </div>
     </div>
     <div style="margin-right: 1rem; white-space: nowrap;">
-      <div class="tos-popup" onclick="this.classList.toggle('show')">
-        Terms of Service
+      <div class="tos-popup">
+        <div class="popup-label">Terms of Service</div>
         <div class="tos-content">
           <strong>TERMS OF SERVICE</strong><br>
           Effective Date: July 1st, 2025<br><br>
@@ -952,8 +944,8 @@ ${formatLine("E", shape.E)}
       </div>
     </div>
     <div style="white-space: nowrap;">
-      <div class="tos-popup" onclick="this.classList.toggle('show')">
-        Privacy Policy
+      <div class="tos-popup">
+        <div class="popup-label">Privacy Policy</div>
         <div class="tos-content">
           <strong>PRIVACY POLICY</strong><br>
           Effective Date: July 1st, 2025<br><br>
@@ -1016,6 +1008,22 @@ ${formatLine("E", shape.E)}
   <p class="section-note-more-muted" style="margin-top: 2rem; text-align: center; color: #FFD700; font-weight: 600; text-shadow: 0 0 6px rgba(255, 215, 0, 0.7), 0 0 12px rgba(255, 215, 0, 0.4);">
     © 2025 Strategic Fretboard. All rights reserved. This tool is protected under U.S. copyright law. Unauthorized duplication or distribution is prohibited. Created by Taylor Irby — designed for thinkers, built for players.
   </p>
+  <script>
+    document.querySelectorAll('.tos-popup').forEach(popup => {
+      const label = popup.querySelector('.popup-label');
+      const content = popup.querySelector('.tos-content');
+
+      label.addEventListener('click', () => {
+        // Close all others
+        document.querySelectorAll('.tos-content').forEach(c => c.style.display = 'none');
+        if (content.style.display === 'block') {
+          content.style.display = 'none';
+        } else {
+          content.style.display = 'block';
+        }
+      });
+    });
+  </script>
 </body>
   <!-- Netlify identity script already included and initialized above -->
 </html> 
