@@ -1023,6 +1023,14 @@ ${formatLine("E", shape.E)}
         }
       });
     });
+
+    // Close popup when clicking outside the content area
+    document.addEventListener('click', function(event) {
+      const isInsidePopup = event.target.closest('.tos-popup');
+      if (!isInsidePopup) {
+        document.querySelectorAll('.tos-content').forEach(c => c.style.display = 'none');
+      }
+    });
   </script>
 </body>
   <!-- Netlify identity script already included and initialized above -->
