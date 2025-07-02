@@ -365,6 +365,40 @@
         0 0 10px rgba(255, 255, 150, 0.8),
         0 0 20px rgba(255, 255, 150, 0.6);
     }
+    .tos-popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: #007BFF;
+    text-decoration: underline;
+  }
+
+  .tos-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    max-width: 90vw;
+    width: 600px;
+    overflow-y: auto;
+    max-height: 80vh;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+    z-index: 9999;
+  }
+
+  .tos-popup:hover .tos-content,
+  .tos-popup.show .tos-content {
+    display: block;
+  }
+
+  @media (hover: none) {
+    .tos-popup:hover .tos-content {
+      display: none;
+    }
+  }
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
@@ -758,6 +792,44 @@ ${formatLine("E", shape.E)}
       renderFretboard();
     });
   </script>
+  <div class="tos-popup" onclick="this.classList.toggle('show')">
+  Terms of Service
+  <div class="tos-content">
+    <strong>TERMS OF SERVICE</strong><br>
+    Effective Date: July 1st, 2025<br><br>
+
+    Welcome to StrategicFretboard.com. These Terms of Service (“Terms”) govern your access to and use of the digital tools offered by Taylor Irby ("we," "our," or "us"). By purchasing or accessing our products, you agree to the following:<br><br>
+
+    <strong>1. LICENSE OF USE</strong><br>
+    You are granted a lifetime license for personal or educational use.<br>
+    You CAN: Use it for learning, teaching, and sharing with others.<br>
+    You CANNOT: Resell, upload, remove branding, or clone the tool.<br><br>
+
+    <strong>2. INTELLECTUAL PROPERTY</strong><br>
+    All content and design are the exclusive property of Taylor Irby.<br><br>
+
+    <strong>3. REFUND POLICY</strong><br>
+    All sales are final. Contact us if you have technical issues.<br><br>
+
+    <strong>4. ACCESS & UPDATES</strong><br>
+    Access is granted manually. Updates are included for life.<br><br>
+
+    <strong>5. NO WARRANTIES</strong><br>
+    The tool is provided "as-is" with no guaranteed outcomes.<br><br>
+
+    <strong>6. LIMITATION OF LIABILITY</strong><br>
+    We are not liable for data loss, misuse, or device issues.<br><br>
+
+    <strong>7. COMMUNITY CONDUCT</strong><br>
+    Use the tool legally and respectfully. No abuse or sharing.<br><br>
+
+    <strong>8. CHANGES TO TERMS</strong><br>
+    We may update the Terms as needed.<br><br>
+
+    <strong>9. CONTACT</strong><br>
+    Email: Team@Strategicfretboard.com
+  </div>
+</div>
   <p class="section-note-more-muted" style="margin-top: 2rem; text-align: center;">
     © 2025 Strategic Fretboard. All rights reserved. This tool is protected under U.S. copyright law. Unauthorized duplication or distribution is prohibited. Created by Taylor Irby — designed for thinkers, built for players.
   </p>
