@@ -366,39 +366,47 @@
         0 0 20px rgba(255, 255, 150, 0.6);
     }
     .tos-popup {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    color: #007BFF;
-    text-decoration: underline;
-  }
-
-  .tos-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    color: black;
-    border: 1px solid #ccc;
-    padding: 1rem;
-    max-width: 90vw;
-    width: 600px;
-    overflow-y: auto;
-    max-height: 80vh;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    font-size: 0.9rem;
-    z-index: 9999;
-  }
-
-  .tos-popup:hover .tos-content,
-  .tos-popup.show .tos-content {
-    display: block;
-  }
-
-  @media (hover: none) {
-    .tos-popup:hover .tos-content {
-      display: none;
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      color: #FFD700;
+      text-decoration: underline;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 1rem;
     }
-  }
+
+    .tos-content {
+      display: none;
+      position: fixed;
+      top: 10vh;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      color: black;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      max-width: 90vw;
+      width: 600px;
+      overflow-y: auto;
+      max-height: 80vh;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      font-size: 0.9rem;
+      z-index: 9999;
+    }
+
+    .tos-popup:hover .tos-content,
+    .tos-popup.show .tos-content {
+      display: block;
+    }
+
+    @media (hover: none) {
+      .tos-popup:hover .tos-content {
+        display: none;
+      }
+    }
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
