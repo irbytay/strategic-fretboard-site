@@ -416,6 +416,22 @@
         display: none;
       }
     }
+
+    .policy-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 600px) {
+      .policy-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
   </style>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
@@ -866,103 +882,105 @@ ${formatLine("E", shape.E)}
       renderFretboard();
     });
   </script>
-  <div class="tos-popup" onclick="this.classList.toggle('show')">
-  Terms of Service
-  <div class="tos-content">
-    <strong>TERMS OF SERVICE</strong><br>
-    Effective Date: July 1st, 2025<br><br>
+  <div class="policy-row">
+    <div class="tos-popup" onclick="this.classList.toggle('show')">
+      Terms of Service
+      <div class="tos-content">
+        <strong>TERMS OF SERVICE</strong><br>
+        Effective Date: July 1st, 2025<br><br>
 
-    Welcome to StrategicFretboard.com. These Terms of Service (“Terms”) govern your access to and use of the digital tools offered by Taylor Irby ("we," "our," or "us"). By purchasing or accessing our products, you agree to the following:<br><br>
+        Welcome to StrategicFretboard.com. These Terms of Service (“Terms”) govern your access to and use of the digital tools offered by Taylor Irby ("we," "our," or "us"). By purchasing or accessing our products, you agree to the following:<br><br>
 
-    <strong>1. LICENSE OF USE</strong><br>
-    You are granted a lifetime license for personal or educational use.<br>
-    You CAN: Use it for learning, teaching, and sharing with others.<br>
-    You CANNOT: Resell, upload, remove branding, or clone the tool.<br><br>
+        <strong>1. LICENSE OF USE</strong><br>
+        You are granted a lifetime license for personal or educational use.<br>
+        You CAN: Use it for learning, teaching, and sharing with others.<br>
+        You CANNOT: Resell, upload, remove branding, or clone the tool.<br><br>
 
-    <strong>2. INTELLECTUAL PROPERTY</strong><br>
-    All content and design are the exclusive property of Taylor Irby.<br><br>
+        <strong>2. INTELLECTUAL PROPERTY</strong><br>
+        All content and design are the exclusive property of Taylor Irby.<br><br>
 
-    <strong>3. REFUND POLICY</strong><br>
-    All sales are final. Contact us if you have technical issues.<br><br>
+        <strong>3. REFUND POLICY</strong><br>
+        All sales are final. Contact us if you have technical issues.<br><br>
 
-    <strong>4. ACCESS & UPDATES</strong><br>
-    Access is granted manually. Updates are included for life.<br><br>
+        <strong>4. ACCESS & UPDATES</strong><br>
+        Access is granted manually. Updates are included for life.<br><br>
 
-    <strong>5. NO WARRANTIES</strong><br>
-    The tool is provided "as-is" with no guaranteed outcomes.<br><br>
+        <strong>5. NO WARRANTIES</strong><br>
+        The tool is provided "as-is" with no guaranteed outcomes.<br><br>
 
-    <strong>6. LIMITATION OF LIABILITY</strong><br>
-    We are not liable for data loss, misuse, or device issues.<br><br>
+        <strong>6. LIMITATION OF LIABILITY</strong><br>
+        We are not liable for data loss, misuse, or device issues.<br><br>
 
-    <strong>7. COMMUNITY CONDUCT</strong><br>
-    Use the tool legally and respectfully. No abuse or sharing.<br><br>
+        <strong>7. COMMUNITY CONDUCT</strong><br>
+        Use the tool legally and respectfully. No abuse or sharing.<br><br>
 
-    <strong>8. CHANGES TO TERMS</strong><br>
-    We may update the Terms as needed.<br><br>
+        <strong>8. CHANGES TO TERMS</strong><br>
+        We may update the Terms as needed.<br><br>
 
-    <strong>9. CONTACT</strong><br>
-    Email: Team@Strategicfretboard.com
+        <strong>9. CONTACT</strong><br>
+        Email: Team@Strategicfretboard.com
+      </div>
+    </div>
+    <div class="tos-popup" onclick="this.classList.toggle('show')">
+      Privacy Policy
+      <div class="tos-content">
+        <strong>PRIVACY POLICY</strong><br>
+        Effective Date: July 1st, 2025<br><br>
+
+        This Privacy Policy explains how StrategicFretboard.com ("we," "our," or "us") collects, uses, and protects your information when you visit our website or purchase our digital products.<br><br>
+
+        <strong>1. WHAT INFORMATION WE COLLECT</strong><br>
+        We collect only the information necessary to fulfill your purchase and communicate with you. This may include:<br>
+        - Your name and email address (provided during checkout or account creation)<br><br>
+
+        We do NOT collect or store:<br>
+        - Credit card numbers (payment is handled securely by Stripe)<br>
+        - IP address or browser data<br>
+        - Any sensitive personal information<br><br>
+
+        <strong>2. HOW WE USE YOUR INFORMATION</strong><br>
+        We use your email address only to:<br>
+        - Deliver access to the digital tool you purchased<br>
+        - Notify you of updates or improvements to the product<br><br>
+
+        You will not be added to a newsletter or marketing list unless you explicitly opt in.<br><br>
+
+        <strong>3. SERVICES WE USE</strong><br>
+        To operate this site and deliver your purchase, we use the following services:<br>
+        - <strong>Netlify</strong> – for site hosting and account management<br>
+        - <strong>Stripe</strong> – to process secure payments<br>
+        - <strong>Supabase</strong> – to manage basic user and purchase information in a secure database<br><br>
+
+        Each of these services has its own privacy policy and takes steps to ensure data security. We only use them for essential operations.<br><br>
+
+        <strong>4. COOKIES</strong><br>
+        We do not use cookies for tracking or analytics purposes. However, essential cookies may be used by Netlify to support secure account access or functionality.<br><br>
+
+        <strong>5. DATA SHARING</strong><br>
+        We do NOT sell, rent, or share your data with third parties. Your information is only used as needed to provide the service you requested and is stored securely.<br><br>
+
+        <strong>6. DATA SECURITY</strong><br>
+        We use modern security practices, including SSL (HTTPS), secure payment gateways, and encrypted data storage (via Supabase), to protect your information.<br><br>
+
+        <strong>7. YOUR RIGHTS</strong><br>
+        You may:<br>
+        - Request to view or delete your stored information<br>
+        - Contact us to update your email or account information<br>
+        - Opt out of future update notifications at any time<br><br>
+        To make a request, email us at Team@Strategicfretboard.com.<br><br>
+
+        <strong>8. CHILDREN’S PRIVACY</strong><br>
+        This service is not intended for children under 13, and we do not knowingly collect personal data from children. If you believe we have inadvertently collected information from a child, please contact us and we will delete it.<br><br>
+
+        <strong>9. CHANGES TO THIS POLICY</strong><br>
+        We may update this Privacy Policy from time to time. Any changes will be posted on this page with a new effective date. Continued use of the site means you agree to the current version.<br><br>
+
+        <strong>10. CONTACT</strong><br>
+        If you have any questions or privacy-related requests, email:<br>
+        📧 Team@Strategicfretboard.com
+      </div>
+    </div>
   </div>
-</div>
-<div class="tos-popup" onclick="this.classList.toggle('show')">
-  Privacy Policy
-  <div class="tos-content">
-    <strong>PRIVACY POLICY</strong><br>
-    Effective Date: July 1st, 2025<br><br>
-
-    This Privacy Policy explains how StrategicFretboard.com ("we," "our," or "us") collects, uses, and protects your information when you visit our website or purchase our digital products.<br><br>
-
-    <strong>1. WHAT INFORMATION WE COLLECT</strong><br>
-    We collect only the information necessary to fulfill your purchase and communicate with you. This may include:<br>
-    - Your name and email address (provided during checkout or account creation)<br><br>
-
-    We do NOT collect or store:<br>
-    - Credit card numbers (payment is handled securely by Stripe)<br>
-    - IP address or browser data<br>
-    - Any sensitive personal information<br><br>
-
-    <strong>2. HOW WE USE YOUR INFORMATION</strong><br>
-    We use your email address only to:<br>
-    - Deliver access to the digital tool you purchased<br>
-    - Notify you of updates or improvements to the product<br><br>
-
-    You will not be added to a newsletter or marketing list unless you explicitly opt in.<br><br>
-
-    <strong>3. SERVICES WE USE</strong><br>
-    To operate this site and deliver your purchase, we use the following services:<br>
-    - <strong>Netlify</strong> – for site hosting and account management<br>
-    - <strong>Stripe</strong> – to process secure payments<br>
-    - <strong>Supabase</strong> – to manage basic user and purchase information in a secure database<br><br>
-
-    Each of these services has its own privacy policy and takes steps to ensure data security. We only use them for essential operations.<br><br>
-
-    <strong>4. COOKIES</strong><br>
-    We do not use cookies for tracking or analytics purposes. However, essential cookies may be used by Netlify to support secure account access or functionality.<br><br>
-
-    <strong>5. DATA SHARING</strong><br>
-    We do NOT sell, rent, or share your data with third parties. Your information is only used as needed to provide the service you requested and is stored securely.<br><br>
-
-    <strong>6. DATA SECURITY</strong><br>
-    We use modern security practices, including SSL (HTTPS), secure payment gateways, and encrypted data storage (via Supabase), to protect your information.<br><br>
-
-    <strong>7. YOUR RIGHTS</strong><br>
-    You may:<br>
-    - Request to view or delete your stored information<br>
-    - Contact us to update your email or account information<br>
-    - Opt out of future update notifications at any time<br><br>
-    To make a request, email us at Team@Strategicfretboard.com.<br><br>
-
-    <strong>8. CHILDREN’S PRIVACY</strong><br>
-    This service is not intended for children under 13, and we do not knowingly collect personal data from children. If you believe we have inadvertently collected information from a child, please contact us and we will delete it.<br><br>
-
-    <strong>9. CHANGES TO THIS POLICY</strong><br>
-    We may update this Privacy Policy from time to time. Any changes will be posted on this page with a new effective date. Continued use of the site means you agree to the current version.<br><br>
-
-    <strong>10. CONTACT</strong><br>
-    If you have any questions or privacy-related requests, email:<br>
-    📧 Team@Strategicfretboard.com
-  </div>
-</div>
   <p class="section-note-more-muted" style="margin-top: 2rem; text-align: center; color: #FFD700; font-weight: 600; text-shadow: 0 0 6px rgba(255, 215, 0, 0.7), 0 0 12px rgba(255, 215, 0, 0.4);">
     © 2025 Strategic Fretboard. All rights reserved. This tool is protected under U.S. copyright law. Unauthorized duplication or distribution is prohibited. Created by Taylor Irby — designed for thinkers, built for players.
   </p>
