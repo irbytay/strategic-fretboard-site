@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Strategic Fretboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@600&display=swap');
+
+    .exo-tagline {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.6rem;
+      color: #ffffff;
+      font-weight: 600;
+      display: block;
+      text-align: center;
+    }
+    .section-title {
+      font-size: 1.6rem;
+      font-family: 'Playfair Display', sans-serif;
+      color: var(--highlight-color);
+      margin-top: 1rem;
+    }
+
+    .section-paragraph {
+      max-width: 700px;
+      margin: 1.5rem auto;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      color: #ffffff;
+      font-family: 'Playfair Display', sans-serif;
+    }
+
+    .section-note {
+      font-size: 0.9rem;
+      color: #C5CAD3;
+      font-weight: bold;
+      font-family: 'Exo 2', sans-serif;
+    }
+
+    .section-note-muted {
+      font-size: 0.85rem;
+      color: #aaa;
+      font-family: 'Exo 2', sans-serif;
+    }
+
+    .section-note-more-muted {
+      font-size: 0.8rem;
+      color: #888;
+      font-family: 'Exo 2', sans-serif;
+    }
+
+    /* .section-subdued, .section-list, .section-paragraph-muted removed: unused */
+    :root {
+      --fret-color: #ccc;
+      --string-color: #aaa;
+      --note-bg: #112240;
+      --note-text: #fff;
+      --highlight-color: #D4AF37;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #0D1B2A;
+      color: var(--note-text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+      color: var(--highlight-color);
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 1.2px;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .gold-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--highlight-color);
+      letter-spacing: 1.2px;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    h1, h2, h3, p {
+      font-family: 'Exo 2', sans-serif;
+      color: #ffffff;
+    }
+
+    .fretboard-scroll-container {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .fretboard-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+    }
+
+    .fretboard {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: transparent;
+    }
+
+    .string-row {
+      display: grid;
+      grid-template-columns: 60px repeat(24, 42px);
+    }
+
+    .string-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      background: #1A2B4C;
+      color: var(--highlight-color);
+    }
+
+    .note-cell {
+      border-left: 1px solid var(--fret-color);
+      border-bottom: 2px solid var(--string-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--note-bg);
+      color: var(--note-text);
+      font-size: 1rem;
+      font-weight: bold;
+      position: relative;
+      white-space: pre-line;
+      font-family: 'Courier New', Courier, monospace;
+      letter-spacing: 0.5px;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    .interval-R {
+      background-color: #2e7031; /* dim green */
+    }
+
+    .interval-M3, .interval-m3 {
+      background-color: #3e4c75; /* dim blue */
+    }
+
+    .interval-P5 {
+      background-color: #704c2e; /* dim brown/orange */
+    }
+
+    .interval-M7, .interval-m7 {
+      background-color: #553770; /* dim violet */
+    }
+
+    .fret-marker {
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      color: var(--highlight-color);
+    }
+
+    /* select.tuning-select removed: tuning is fixed */
+
+    @media (max-width: 768px) {
+      .note-cell {
+        width: 36px;
+        height: 36px;
+        font-size: 0.7rem;
+      }
+      .fret-numbers {
+        margin-top: -6px;
+        margin-bottom: 2px;
+        padding-left: 4px;
+        padding-right: 4px;
+        overflow-x: auto;
+      }
+      .fretboard-scroll-container {
+        padding-bottom: 8px;
+      }
+      .fretboard-wrapper {
+        margin-top: 0;
+      }
+    }
+
+    .fret-numbers {
+      display: grid;
+      grid-template-columns: 60px repeat(24, 42px);
+      margin-bottom: 0;
+      margin-top: 0;
+      padding: 0 0 4px 0;
+      color: var(--highlight-color);
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.5px;
+      overflow-x: auto;
+    }
+
+    .fret-numbers span {
+      padding: 2px 0;
+      border-bottom: 1px solid var(--highlight-color);
+      opacity: 0.7;
+      color: #888;
+    }
+
+    .fret-numbers span:first-child {
+      background: transparent;
+      border: none;
+    }
+
+    .fret-numbers .dot-fret {
+      color: var(--highlight-color);
+      font-weight: bold;
+    }
+
+    /* Visually simulate thicker string lines for realism */
+    .string-row:nth-child(1) .note-cell { border-bottom: 1px solid var(--string-color); }
+    .string-row:nth-child(2) .note-cell { border-bottom: 2px solid var(--string-color); }
+    .string-row:nth-child(3) .note-cell { border-bottom: 3px solid var(--string-color); }
+    .string-row:nth-child(4) .note-cell { border-bottom: 4px solid var(--string-color); }
+    .string-row:nth-child(5) .note-cell { border-bottom: 5px solid var(--string-color); }
+    .string-row:nth-child(6) .note-cell { border-bottom: 6px solid var(--string-color); }
+
+    /* Reset button alignment */
+    .reset-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 24px;
+      margin-bottom: 28px;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      .reset-container {
+        justify-content: center;
+        padding-right: 0;
+        margin-top: 24px;
+        margin-bottom: 28px;
+      }
+    }
+
+    #reset-fretboard {
+      position: relative;
+      padding: 6px 12px;
+      background: linear-gradient(135deg, #222, #555);
+      color: var(--highlight-color);
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+      transition: background 0.3s;
+    }
+    .help-icon-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 12px auto;
+  z-index: 5;
+}
+
+.help-icon {
+  background: linear-gradient(135deg, #333, #555);
+  color: var(--highlight-color);
+  padding: 6px 10px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+  user-select: none;
+}
+
+.help-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 240px;
+  background-color: #1a1a1a;
+  color: #eee;
+  text-align: left;
+  border-radius: 6px;
+  padding: 12px;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  transition: opacity 0.3s ease;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.2);
+  white-space: normal;
+  max-width: 90vw;
+}
+
+.help-icon:hover + .help-tooltip,
+.help-icon:focus + .help-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+    .logo-image {
+      display: block;
+      width: 360px;
+      height: auto;
+      max-width: 80vw;
+      object-fit: contain;
+    }
+    .highlighted-link {
+      font-weight: 700;
+      color: #FFD700;
+      text-decoration: none;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background-color: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .highlighted-link:hover {
+      color: #fff;
+      background-color: #FFD700;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Strategic Owl glowing credit styles */
+    .gold-star {
+      color: #FFD700;
+      font-size: 1.1rem;
+      text-shadow:
+        0 0 6px rgba(255, 215, 0, 0.7),
+        0 0 10px rgba(255, 215, 0, 0.5),
+        0 0 14px rgba(255, 215, 0, 0.4);
+      font-weight: bold;
+    }
+    .strategic-owl-credit {
+      margin-top: 12px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+      color: #bbb;
+      font-family: 'Space Grotesk', sans-serif;
+      text-align: center;
+    }
+
+    .strategic-owl-credit a {
+      color: #FFD700;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      text-shadow:
+        0 0 6px rgba(255, 215, 0, 0.7),
+        0 0 12px rgba(255, 215, 0, 0.5),
+        0 0 18px rgba(255, 215, 0, 0.3);
+    }
+
+    .strategic-owl-credit a:hover {
+      color: #fffbe0;
+      text-shadow:
+        0 0 10px rgba(255, 255, 150, 0.8),
+        0 0 20px rgba(255, 255, 150, 0.6);
+    }
+    .tos-popup {
+      position: relative;
+      display: inline-block;
+    }
+
+    .popup-label {
+      cursor: pointer;
+      color: #FFD700;
+      text-decoration: underline;
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 1rem;
+    }
+
+    .tos-content {
+      display: none;
+      position: fixed;
+      top: 10vh;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      color: black;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      max-width: 90vw;
+      width: 600px;
+      overflow-y: auto;
+      max-height: 80vh;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      font-size: 0.9rem;
+      z-index: 9999;
+    }
+
+    .policy-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 600px) {
+      .policy-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+  </style>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    // 1. On init, check subscriber status
+    netlifyIdentity.on("init", user => {
+      if (user && user.email) {
+        const email = user.email;
+        fetch("/data/subscribers.json")
+          .then(res => {
+            if (!res.ok) throw new Error("subscribers.json not found");
+            return res.json();
+          })
+          .then(data => {
+            const subscriber = data[email];
+            if (subscriber && subscriber.status === "active") {
+              document.getElementById("fretboard-link").style.display = "block";
+            } else {
+              document.getElementById("stripe-link").style.display = "block";
+            }
+          })
+          .catch(err => {
+            console.error("Error checking subscription:", err);
+            document.getElementById("stripe-link").style.display = "block";
+          });
+      }
+    });
+
+    // 2. On login, redirect to home.html
+    netlifyIdentity.on("login", () => {
+      window.location.href = "home.html";
+    });
+
+    // 3. Only call init once, at the end
+    netlifyIdentity.init();
+  </script>
+  <!-- Open Graph Meta Tags for social media sharing -->
+  <meta property="og:title" content="The Strategic Fretboard" />
+  <meta property="og:description" content="A visual map. A strategic tool. A new way to see the guitar." />
+  <meta property="og:image" content="socialmedia.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://strategicfretboard.com" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Strategic Fretboard" />
+  <meta name="twitter:description" content="A visual map. A strategic tool. A new way to see the guitar." />
+  <meta name="twitter:image" content="socialmedia.png" />
+</head>
+<body style="padding: 2rem; font-family: 'Exo 2', sans-serif; background-color: #0D1B2A; color: #ffffff;">
+  <div style="max-width: 700px; margin: 0 auto; background-color: #1a1a1a; padding: 2rem; border-radius: 8px; box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);">
+    <h1 style="color: #FFD700; font-family: 'Playfair Display', serif;">Privacy Policy</h1>
+    <div style="color: #ccc; font-size: 0.95rem; line-height: 1.6;">
+      <strong>Effective Date: July 1st, 2025</strong><br><br>
+
+      This Privacy Policy explains how StrategicFretboard.com ("we," "our," or "us") collects, uses, and protects your information when you visit our website or purchase our digital products.<br><br>
+
+      <strong>1. WHAT INFORMATION WE COLLECT</strong><br>
+      We collect only the information necessary to fulfill your purchase and communicate with you. This may include:<br>
+      - Your name and email address (provided during checkout or account creation)<br><br>
+
+      We do NOT collect or store:<br>
+      - Credit card numbers (payment is handled securely by Stripe)<br>
+      - IP address or browser data<br>
+      - Any sensitive personal information<br><br>
+
+      <strong>2. HOW WE USE YOUR INFORMATION</strong><br>
+      We use your email address only to:<br>
+      - Deliver access to the digital tool you purchased<br>
+      - Notify you of updates or improvements to the product<br><br>
+
+      You will not be added to a newsletter or marketing list unless you explicitly opt in.<br><br>
+
+      <strong>3. SERVICES WE USE</strong><br>
+      To operate this site and deliver your purchase, we use the following services:<br>
+      - <strong>Netlify</strong> – for site hosting and account management<br>
+      - <strong>Stripe</strong> – to process secure payments<br>
+      - <strong>Supabase</strong> – to manage basic user and purchase information in a secure database<br><br>
+
+      Each of these services has its own privacy policy and takes steps to ensure data security. We only use them for essential operations.<br><br>
+
+      <strong>4. COOKIES</strong><br>
+      We do not use cookies for tracking or analytics purposes. However, essential cookies may be used by Netlify to support secure account access or functionality.<br><br>
+
+      <strong>5. DATA SHARING</strong><br>
+      We do NOT sell, rent, or share your data with third parties. Your information is only used as needed to provide the service you requested and is stored securely.<br><br>
+
+      <strong>6. DATA SECURITY</strong><br>
+      We use modern security practices, including SSL (HTTPS), secure payment gateways, and encrypted data storage (via Supabase), to protect your information.<br><br>
+
+      <strong>7. YOUR RIGHTS</strong><br>
+      You may:<br>
+      - Request to view or delete your stored information<br>
+      - Contact us to update your email or account information<br>
+      - Opt out of future update notifications at any time<br><br>
+      To make a request, email us at Team@Strategicfretboard.com.<br><br>
+
+      <strong>8. CHILDREN’S PRIVACY</strong><br>
+      This service is not intended for children under 13, and we do not knowingly collect personal data from children. If you believe we have inadvertently collected information from a child, please contact us and we will delete it.<br><br>
+
+      <strong>9. CHANGES TO THIS POLICY</strong><br>
+      We may update this Privacy Policy from time to time. Any changes will be posted on this page with a new effective date. Continued use of the site means you agree to the current version.<br><br>
+
+      <strong>10. CONTACT</strong><br>
+      If you have any questions or privacy-related requests, email:<br>
+      📧 Team@Strategicfretboard.com
+    </div>
+  </div>
+</body>
+  <!-- Netlify identity script already included and initialized above -->
+</html> 
+
+   
