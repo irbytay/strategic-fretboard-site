@@ -59,32 +59,6 @@
       transform: scale(1.04);
       box-shadow: 0 8px 18px rgba(255, 215, 0, 0.45);
     }
-
-    .apk-button {
-      color: #FFD700;
-      font-weight: 700;
-      font-size: 1.05rem;
-      text-decoration: none;
-      display: inline-block;
-      padding: 0.75rem 1.8rem;
-      background: transparent;
-      border: 2px solid #FFD700;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      margin-top: 12px;
-      text-shadow:
-        0 0 6px rgba(255, 215, 0, 0.7),
-        0 0 12px rgba(255, 215, 0, 0.5),
-        0 0 18px rgba(255, 215, 0, 0.3);
-    }
-
-    .apk-button:hover {
-      color: #fffbe0;
-      border-color: #fffbe0;
-      text-shadow:
-        0 0 10px rgba(255, 255, 150, 0.8),
-        0 0 20px rgba(255, 255, 150, 0.6);
-    }
     .image-placeholder {
       width: 100%;
       max-width: 600px;
@@ -316,11 +290,11 @@
   </p>
 
   <div class="cta">
-    <p>Thanks for your purchase. You now have full access to the Android version of Strategic Fretboard.</p>
-    <p><strong>Click the button below to download the APK:</strong></p>
-    <a href="app-release.apk" class="apk-button" download>📲 Download Android APK</a>
+    <a href="app-release.apk" download>
+      <button>📲 Download for Android (.apk)</button>
+    </a>
     <p style="font-size: 0.9rem; color: #ccc; margin-top: 6px;">
-      After downloading, go to your device’s settings and allow installation from unknown sources if prompted.
+      For Android users: You may need to allow installs from unknown sources in your phone’s settings after downloading.
     </p>
   </div>
 
@@ -342,7 +316,7 @@
     </div>
     <div id="stripe-link" style="display:none;">
       <p style="font-size: 1rem; color: #ffccaa;">Not seeing access yet? If you’ve already made a purchase, please <a href="mailto:team@strategicfretboard.com?subject=Access Activation Request" style="color:#FFD700; text-decoration:underline;">send me an email</a> with the email you used at checkout. I’ll get you set up as soon as possible.</p>
-      <button onclick="startStripeCheckout()">Unlock Full Access – $5.99</button>
+      <button onclick="startStripeCheckout()">Unlock Full Access – $12.99</button>
     </div>
     <div>
       <button onclick="netlifyIdentity.logout()" class="cta-button">Log Out</button>
@@ -354,7 +328,7 @@
   </footer>
   <script>
     function startStripeCheckout() {
-      window.location.href = "https://buy.stripe.com/eVq4gzcNlaBt4kecMpdwc02";
+      window.location.href = "https://buy.stripe.com/8x28wPbJh7ph182dQtdwc03";
     }
   </script>
 
