@@ -185,6 +185,7 @@
               }
               fretLink.style.display = "block";
               document.getElementById("fretboard2-link").style.display = "block";
+              document.getElementById("apk-download").style.display = "block";
             } else {
               //document.getElementById("error-message").textContent = "⚠️ Subscription is not active for " + email;
               //document.getElementById("error-message").style.display = "block";
@@ -263,6 +264,7 @@
                 if (subscriber && subscriber.status === "active") {
                   document.getElementById("fretboard-link").style.display = "block";
                   document.getElementById("fretboard2-link").style.display = "block";
+                  document.getElementById("apk-download").style.display = "block";
                   console.log("🎯 Fretboard access granted after post-checkout validation.");
                 }
               })
@@ -290,36 +292,38 @@
   </p>
 
   <div class="cta">
-    <a href="app-release.apk" download>
-      <button>📲 Download for Android (.apk)</button>
-    </a>
-    <p style="font-size: 0.9rem; color: #ccc; margin-top: 6px;">
-      For Android users: You may need to allow installs from unknown sources in your phone’s settings after downloading.
-    </p>
-  </div>
-
-  <p>This is your Strategic Fretboard dashboard — where guitar theory becomes a visual map.</p>
-
-  <div class="cta">
-    <div id="fretboard-link" style="display:none;">
-      <p style="font-size: 1rem; color: #a0ffa0;">✅ Access confirmed. Explore your fretboard tools below.</p>
-      <a href="/fretboard.html">
-        <button>Access Fretboard 1.0</button>
+    <div id="apk-download" style="display:none;">
+      <a href="app-release.apk" download>
+        <button>📲 Download for Android (.apk)</button>
       </a>
-      <p style="font-size: 0.9rem; color: #ccc; margin-top: 4px;">Classic scale view with core note display.</p>
+      <p style="font-size: 0.9rem; color: #ccc; margin-top: 6px;">
+        For Android users: You may need to allow installs from unknown sources in your phone’s settings after downloading.
+      </p>
     </div>
-    <div id="fretboard2-link" style="display:none;">
-      <a href="/fretboard2.html">
-        <button>Access Fretboard 2.0</button>
-      </a>
-      <p style="font-size: 0.9rem; color: #ccc; margin-top: 4px;">Enhanced explorer with intervals, formulas, and tuning control.</p>
-    </div>
-    <div id="stripe-link" style="display:none;">
-      <p style="font-size: 1rem; color: #ffccaa;">Not seeing access yet? If you’ve already made a purchase, please <a href="mailto:team@strategicfretboard.com?subject=Access Activation Request" style="color:#FFD700; text-decoration:underline;">send me an email</a> with the email you used at checkout. I’ll get you set up as soon as possible.</p>
-      <button onclick="startStripeCheckout()">Unlock Full Access – $12.99</button>
-    </div>
-    <div>
-      <button onclick="netlifyIdentity.logout()" class="cta-button">Log Out</button>
+
+    <p>This is your Strategic Fretboard dashboard — where guitar theory becomes a visual map.</p>
+
+    <div class="cta">
+      <div id="fretboard-link" style="display:none;">
+        <p style="font-size: 1rem; color: #a0ffa0;">✅ Access confirmed. Explore your fretboard tools below.</p>
+        <a href="/fretboard.html">
+          <button>Access Fretboard 1.0</button>
+        </a>
+        <p style="font-size: 0.9rem; color: #ccc; margin-top: 4px;">Classic scale view with core note display.</p>
+      </div>
+      <div id="fretboard2-link" style="display:none;">
+        <a href="/fretboard2.html">
+          <button>Access Fretboard 2.0</button>
+        </a>
+        <p style="font-size: 0.9rem; color: #ccc; margin-top: 4px;">Enhanced explorer with intervals, formulas, and tuning control.</p>
+      </div>
+      <div id="stripe-link" style="display:none;">
+        <p style="font-size: 1rem; color: #ffccaa;">Not seeing access yet? If you’ve already made a purchase, please <a href="mailto:team@strategicfretboard.com?subject=Access Activation Request" style="color:#FFD700; text-decoration:underline;">send me an email</a> with the email you used at checkout. I’ll get you set up as soon as possible.</p>
+        <button onclick="startStripeCheckout()">Unlock Full Access – $12.99</button>
+      </div>
+      <div>
+        <button onclick="netlifyIdentity.logout()" class="cta-button">Log Out</button>
+      </div>
     </div>
   </div>
 
