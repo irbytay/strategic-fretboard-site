@@ -4,8 +4,8 @@ A lightweight, responsive promotional website for the Strategic Fretboard iPhone
 
 ## Pages
 
-- `index.html` — App overview, screenshots, features, and store links
-- `privacy.html` — App and website privacy information
+- `index.html`: App overview, screenshots, features, and store links
+- `privacy.html`: App and website privacy information
 
 ## Publishing
 
