@@ -12,7 +12,7 @@
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#081727" />
   <link rel="icon" type="image/png" href="assets/images/strategic-fretboard-logo.png" />
-  <link rel="stylesheet" href="assets/css/fretboard.css?v=20261024-3" />
+  <link rel="stylesheet" href="assets/css/fretboard.css?v=20261024-4" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"MobileApplication","name":"Strategic Fretboard","operatingSystem":"iOS, iPadOS, Android","applicationCategory":"MusicApplication","offers":{"@type":"Offer","price":"12.99","priceCurrency":"USD"},"downloadUrl":"https://strategicfretboard.com/#android-download","description":"A visual tool for mapping notes, scales, chords, CAGED connections, tunings, and chord movement across the guitar or bass fretboard."}
@@ -118,6 +118,19 @@
         <a class="download-button" id="download-button" href="#">Download APK</a>
       </div>
       <div class="access-status" id="access-status" role="status" aria-live="polite"></div>
+
+      <aside class="install-guide" aria-labelledby="install-guide-title">
+        <div class="install-guide-heading">
+          <span class="install-guide-icon" aria-hidden="true">↓</span>
+          <div><span>After download</span><h3 id="install-guide-title">Install on your Android device</h3></div>
+        </div>
+        <ol>
+          <li><span>1</span><p><strong>Open the APK</strong><small>Find it in the Files app under Downloads.</small></p></li>
+          <li><span>2</span><p><strong>Allow this source</strong><small>If prompted, open Settings and allow installs from Files or your browser.</small></p></li>
+          <li><span>3</span><p><strong>Tap Install</strong><small>Return to the APK and complete the Android installation.</small></p></li>
+        </ol>
+        <p class="install-guide-note">Android requires this approval for apps installed outside Google Play. You can turn it off again after installation.</p>
+      </aside>
     </section>
 
     <section class="showcase" aria-labelledby="showcase-title">
@@ -144,7 +157,7 @@
       <a class="store-badge store-badge--apple" href="https://apps.apple.com/us/app/strategic-fretboard/id6748248874" target="_blank" rel="noopener noreferrer" aria-label="Download Strategic Fretboard on the App Store"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.7 12.9c0-2.7 2.2-4 2.3-4.1-1.3-1.9-3.3-2.1-4-2.1-1.7-.2-3.3 1-4.2 1-.9 0-2.2-1-3.6-.9-1.9 0-3.6 1.1-4.6 2.8-2 3.4-.5 8.5 1.4 11.2.9 1.4 2.1 2.9 3.6 2.8 1.4-.1 2-.9 3.7-.9 1.7 0 2.2.9 3.7.9 1.5 0 2.5-1.4 3.5-2.8 1.1-1.6 1.5-3.2 1.6-3.3-.1 0-3.4-1.3-3.4-4.6ZM13.9 4.9c.8-1 1.4-2.4 1.2-3.8-1.2.1-2.7.8-3.6 1.8-.8.9-1.5 2.3-1.3 3.7 1.4.1 2.8-.7 3.7-1.7Z"></path></svg><span><small>Download on the</small><strong>App Store</strong></span></a>
     </section>
   </main>
-  <footer><p>© 2026 Taylor Irby. Strategic Fretboard.</p><nav aria-label="Footer navigation"><a href="privacy.html">Privacy</a><a href="https://thestrategicowl.com" target="_blank" rel="noopener noreferrer">The Strategic Owl</a></nav></footer>
+  <footer><p>© 2026 Taylor Irby. Strategic Fretboard.</p><nav aria-label="Footer navigation"><a href="privacy.html">Privacy</a><a href="https://thestrategicowl.com" target="_blank" rel="noopener noreferrer">The Strategic Owl</a><a href="admin.html">Admin</a></nav></footer>
   <script>
     const SUPABASE_URL = "https://gopyzkcmvkbusdnwjlbb.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_CYM_aXzslre6SE8P-tTYBw_sw_-gQ1h";
