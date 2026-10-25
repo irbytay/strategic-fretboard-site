@@ -89,14 +89,26 @@
           <div class="path-copy">
             <span class="path-kicker">Returning purchaser</span>
             <h3>Recover your download</h3>
-            <p>Use the email from checkout. A private sign-in link confirms it belongs to you.</p>
+            <p>Use the email from checkout. We will send a six-digit code to confirm it belongs to you.</p>
           </div>
           <form class="verify-form" id="verify-form">
             <label class="sr-only" for="purchase-email">Email used at checkout</label>
             <div class="verify-row">
               <input id="purchase-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="Email used at checkout" required />
-              <button type="submit">Recover</button>
+              <button type="submit">Send code</button>
             </div>
+          </form>
+          <form class="code-form" id="code-form" hidden>
+            <div class="code-heading">
+              <span>Enter verification code</span>
+              <button type="button" id="change-email">Change email</button>
+            </div>
+            <label class="sr-only" for="verification-code">Six-digit verification code</label>
+            <div class="code-row">
+              <input id="verification-code" name="code" type="text" autocomplete="one-time-code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="000000" required />
+              <button type="submit">Verify</button>
+            </div>
+            <p class="code-destination" id="code-destination"></p>
           </form>
         </article>
       </div>
@@ -137,8 +149,14 @@
     const SUPABASE_URL = "https://gopyzkcmvkbusdnwjlbb.supabase.co";
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_CYM_aXzslre6SE8P-tTYBw_sw_-gQ1h";
     const DOWNLOAD_FUNCTION = `${SUPABASE_URL}/functions/v1/strategic-fretboard-download`;
+    const authCallbackPending = window.location.hash.includes("access_token=") || window.location.hash.includes("error=");
+    const authCallbackParameters = new URLSearchParams(window.location.hash.slice(1));
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
     const verifyForm = document.getElementById("verify-form");
+    const codeForm = document.getElementById("code-form");
+    const codeInput = document.getElementById("verification-code");
+    const codeDestination = document.getElementById("code-destination");
+    const changeEmailButton = document.getElementById("change-email");
     const accessStatus = document.getElementById("access-status");
     const downloadButton = document.getElementById("download-button");
     const downloadUnlock = document.getElementById("download-unlock");
@@ -175,21 +193,64 @@
     verifyForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const email = new FormData(verifyForm).get("email").trim().toLowerCase();
-      setAccessStatus("Sending your secure verification link…");
+      setAccessStatus("Sending your verification code…");
       const { error } = await supabaseClient.auth.signInWithOtp({
         email,
-        options: { emailRedirectTo: `${window.location.origin}/#android-download` },
+        options: { shouldCreateUser: true },
       });
       if (error) {
-        console.error("Recovery email failed", error);
-        setAccessStatus(`We could not send the verification email: ${error.message}`, "error");
+        console.error("Verification code failed", error);
+        setAccessStatus(`We could not send the verification code: ${error.message}`, "error");
         return;
       }
-      setAccessStatus("Check your email and open the secure link to continue.", "success");
+      sessionStorage.setItem("strategicFretboardRecoveryEmail", email);
+      verifyForm.hidden = true;
+      codeForm.hidden = false;
+      codeDestination.textContent = `Code sent to ${email}`;
+      codeInput.value = "";
+      codeInput.focus();
+      setAccessStatus("Check your email for the six-digit code.", "success");
     });
 
-    supabaseClient.auth.getSession().then(({ data }) => {
+    codeForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const email = sessionStorage.getItem("strategicFretboardRecoveryEmail") || "";
+      const token = codeInput.value.replace(/\D/g, "");
+      if (!email || token.length !== 6) {
+        setAccessStatus("Enter the complete six-digit code.", "error");
+        return;
+      }
+
+      setAccessStatus("Confirming your code…");
+      const { data, error } = await supabaseClient.auth.verifyOtp({ email, token, type: "email" });
+      if (error || !data.session) {
+        setAccessStatus(error?.message || "That code could not be verified. Request a new code and try again.", "error");
+        return;
+      }
+
+      sessionStorage.removeItem("strategicFretboardRecoveryEmail");
+      await revealAndroidDownload({ session: data.session });
+    });
+
+    changeEmailButton.addEventListener("click", () => {
+      sessionStorage.removeItem("strategicFretboardRecoveryEmail");
+      codeForm.hidden = true;
+      verifyForm.hidden = false;
+      setAccessStatus("");
+      document.getElementById("purchase-email").focus();
+    });
+
+    if (authCallbackPending) {
+      document.getElementById("android-download").scrollIntoView({ behavior: "smooth", block: "center" });
+      const callbackError = authCallbackParameters.get("error_description");
+      setAccessStatus(callbackError ? decodeURIComponent(callbackError.replace(/\+/g, " ")) : "Email confirmed. Checking your purchase…", callbackError ? "error" : "");
+    }
+
+    supabaseClient.auth.getSession().then(({ data, error }) => {
       if (data.session) revealAndroidDownload({ session: data.session });
+      else if (authCallbackPending && !authCallbackParameters.get("error_description")) {
+        setAccessStatus(error?.message || "The verification link could not be completed. Please request a new link.", "error");
+      }
     });
     supabaseClient.auth.onAuthStateChange((event, session) => {
       if ((event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session) revealAndroidDownload({ session });
