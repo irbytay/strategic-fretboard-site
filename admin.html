@@ -19,10 +19,7 @@
 
   <main class="admin-page" id="main-content">
     <section class="admin-card" aria-labelledby="admin-title">
-      <div class="admin-mark" aria-hidden="true">S</div>
-      <p class="eyebrow">Private administrator access</p>
-      <h1 id="admin-title">Complimentary access.</h1>
-      <p class="admin-intro">Add an email to the verified purchaser list. They can then recover the Android download from the main website.</p>
+      <h1 id="admin-title">Admin</h1>
 
       <div id="admin-signed-out">
         <button class="apple-sign-in" id="apple-sign-in" type="button">
@@ -96,13 +93,10 @@
       }
     }
 
-    document.getElementById("apple-sign-in").addEventListener("click", async () => {
+    document.getElementById("apple-sign-in").addEventListener("click", () => {
       setStatus("Opening Apple sign in…");
-      const { error } = await client.auth.signInWithOAuth({
-        provider: "apple",
-        options: { redirectTo: `${window.location.origin}/admin.html` },
-      });
-      if (error) setStatus(error.message || "Apple sign in could not be opened.", "error");
+      const redirectTo = encodeURIComponent(`${window.location.origin}/admin.html`);
+      window.location.assign(`${SUPABASE_URL}/auth/v1/authorize?provider=apple&redirect_to=${redirectTo}`);
     });
 
     document.getElementById("admin-sign-out").addEventListener("click", async () => {
