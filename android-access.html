@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Android Access | Strategic Fretboard</title>
+  <meta name="description" content="Purchase or securely download Strategic Fretboard for Android." />
+  <meta name="theme-color" content="#081727" />
+  <link rel="icon" type="image/png" href="assets/images/strategic-fretboard-logo.png" />
+  <link rel="stylesheet" href="assets/css/fretboard.css?v=20261024-1" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html"><img src="assets/images/strategic-fretboard-logo.png" alt="" width="1774" height="887" /><span>Strategic Fretboard</span></a>
+    <a class="header-download" href="index.html">Back to overview</a>
+  </header>
+
+  <main class="access-page" id="main-content">
+    <section class="access-card" aria-labelledby="access-title">
+      <p class="eyebrow">Strategic Fretboard for Android</p>
+      <h1 id="access-title">Buy once.<br /><em>Keep playing.</em></h1>
+      <p class="access-intro">Purchase directly for $12.99, or verify the email used for an earlier purchase to download the latest Android version.</p>
+
+      <a class="direct-purchase" href="https://buy.stripe.com/8x28wPbJh7ph182dQtdwc03" rel="noopener noreferrer">
+        <span>Buy direct</span><strong>$12.99</strong>
+      </a>
+      <p class="secure-note">Secure checkout powered by Stripe.</p>
+
+      <div class="access-divider"><span>Already purchased?</span></div>
+
+      <form class="verify-form" id="verify-form">
+        <label for="purchase-email">Purchase email</label>
+        <div class="verify-row">
+          <input id="purchase-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required />
+          <button type="submit">Verify email</button>
+        </div>
+        <p class="form-help">We will email you a secure sign-in link. Use the same address entered at checkout.</p>
+      </form>
+
+      <div class="access-status" id="access-status" role="status" aria-live="polite"></div>
+      <a class="download-button" id="download-button" href="#" hidden>Download Android APK</a>
+    </section>
+  </main>
+
+  <footer><p>© 2026 Taylor Irby. Strategic Fretboard.</p><nav aria-label="Footer navigation"><a href="privacy.html">Privacy</a><a href="https://thestrategicowl.com" target="_blank" rel="noopener noreferrer">The Strategic Owl</a></nav></footer>
+
+  <script>
+    const SUPABASE_URL = "https://gopyzkcmvkbusdnwjlbb.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8";
+    const DOWNLOAD_FUNCTION = `${SUPABASE_URL}/functions/v1/strategic-fretboard-download`;
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    const form = document.getElementById("verify-form");
+    const status = document.getElementById("access-status");
+    const downloadButton = document.getElementById("download-button");
+
+    function setStatus(message, kind = "") {
+      status.textContent = message;
+      status.dataset.kind = kind;
+    }
+
+    async function requestDownload(session) {
+      setStatus("Confirming your purchase…");
+      const response = await fetch(DOWNLOAD_FUNCTION, {
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          Authorization: `Bearer ${session.access_token}`,
+          "Content-Type": "application/json",
+        },
+        body: "{}",
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.downloadUrl) {
+        setStatus(result.error || "We could not confirm this purchase.", "error");
+        return;
+      }
+
+      downloadButton.href = result.downloadUrl;
+      downloadButton.hidden = false;
+      setStatus("Purchase confirmed. Your private download link is ready for 10 minutes.", "success");
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const email = new FormData(form).get("email").trim().toLowerCase();
+      setStatus("Sending your secure verification link…");
+      const { error } = await client.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: `${window.location.origin}/android-access.html` },
+      });
+      if (error) {
+        setStatus("We could not send the verification email. Please try again.", "error");
+        return;
+      }
+      setStatus("Check your email and open the secure link to continue.", "success");
+    });
+
+    client.auth.getSession().then(({ data }) => {
+      if (data.session) requestDownload(data.session);
+    });
+    client.auth.onAuthStateChange((event, session) => {
+      if ((event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session) requestDownload(session);
+    });
+  </script>
+</body>
+</html>
