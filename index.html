@@ -135,7 +135,7 @@
   <footer><p>© 2026 Taylor Irby. Strategic Fretboard.</p><nav aria-label="Footer navigation"><a href="privacy.html">Privacy</a><a href="https://thestrategicowl.com" target="_blank" rel="noopener noreferrer">The Strategic Owl</a></nav></footer>
   <script>
     const SUPABASE_URL = "https://gopyzkcmvkbusdnwjlbb.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJIUzI1NiIsInJlZiI6ImdvcHl6a2NtdmtidXNkbndqbGJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExODc5MTAsImV4cCI6MjA2Njc2MzkxMH0.g_c2FGIGDgXi_zCA7_ZaIteVm2S_ZkUkB-CHkdBWxc8";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_CYM_aXzslre6SE8P-tTYBw_sw_-gQ1h";
     const DOWNLOAD_FUNCTION = `${SUPABASE_URL}/functions/v1/strategic-fretboard-download`;
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
     const verifyForm = document.getElementById("verify-form");
@@ -181,7 +181,8 @@
         options: { emailRedirectTo: `${window.location.origin}/#android-download` },
       });
       if (error) {
-        setAccessStatus("We could not send the verification email. Please try again.", "error");
+        console.error("Recovery email failed", error);
+        setAccessStatus(`We could not send the verification email: ${error.message}`, "error");
         return;
       }
       setAccessStatus("Check your email and open the secure link to continue.", "success");
