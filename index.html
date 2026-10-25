@@ -12,7 +12,7 @@
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#081727" />
   <link rel="icon" type="image/png" href="assets/images/strategic-fretboard-logo.png" />
-  <link rel="stylesheet" href="assets/css/fretboard.css?v=20261022-1" />
+  <link rel="stylesheet" href="assets/css/fretboard.css?v=20261024-2" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"MobileApplication","name":"Strategic Fretboard","operatingSystem":"iOS, iPadOS, Android","applicationCategory":"MusicApplication","offers":{"@type":"Offer","price":"12.99","priceCurrency":"USD"},"downloadUrl":"https://strategicfretboard.com/#android-download","description":"A visual tool for mapping notes, scales, chords, CAGED connections, tunings, and chord movement across the guitar or bass fretboard."}
@@ -58,27 +58,54 @@
     </section>
 
     <section class="android-access" id="android-download" aria-labelledby="android-access-title">
-      <div class="android-access-copy">
-        <p class="eyebrow">Direct Android access</p>
-        <h2 id="android-access-title">Buy once.<br /><em>Keep playing.</em></h2>
-        <p>Purchase directly for $12.99, or verify the email used for an earlier purchase. Once confirmed, your private APK download appears right here.</p>
-        <a class="direct-purchase" href="https://buy.stripe.com/8x28wPbJh7ph182dQtdwc03" rel="noopener noreferrer"><span>Buy direct with Stripe</span><strong>$12.99</strong></a>
-        <p class="secure-note">Secure checkout powered by Stripe.</p>
+      <div class="android-access-heading">
+        <div>
+          <p class="eyebrow">Strategic Fretboard for Android</p>
+          <h2 id="android-access-title">One purchase.<br /><em>Your fretboard.</em></h2>
+        </div>
+        <p>Buy directly, then return here automatically to download. No account setup and no subscription.</p>
       </div>
 
-      <div class="android-verify">
-        <p class="verify-title">Already purchased?</p>
-        <form class="verify-form" id="verify-form">
-          <label for="purchase-email">Purchase email</label>
-          <div class="verify-row">
-            <input id="purchase-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required />
-            <button type="submit">Verify email</button>
+      <div class="android-paths">
+        <article class="purchase-path purchase-path--primary">
+          <div class="path-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M17.6 9.5H6.4v8.9c0 .7.6 1.3 1.3 1.3h.9V22c0 .7.6 1.3 1.3 1.3s1.3-.6 1.3-1.3v-2.3h1.6V22c0 .7.6 1.3 1.3 1.3s1.3-.6 1.3-1.3v-2.3h.9c.7 0 1.3-.6 1.3-1.3V9.5ZM7 8.4h10c-.1-1.8-1.1-3.4-2.6-4.3l1.1-2c.1-.2 0-.5-.2-.6-.2-.1-.5 0-.6.2l-1.1 2a6 6 0 0 0-3.2 0l-1.1-2c-.1-.2-.4-.3-.6-.2-.2.1-.3.4-.2.6l1.1 2C8.1 5 7.1 6.6 7 8.4Z"/></svg>
           </div>
-          <p class="form-help">Use the same email entered at checkout. We will send a secure verification link.</p>
-        </form>
-        <div class="access-status" id="access-status" role="status" aria-live="polite"></div>
-        <a class="download-button" id="download-button" href="#" hidden>Download Android APK</a>
+          <div class="path-copy">
+            <span class="path-kicker">New purchase</span>
+            <h3>Get the Android app</h3>
+            <p>Complete checkout with Stripe. Your private download unlocks when you return.</p>
+          </div>
+          <a class="direct-purchase" href="https://buy.stripe.com/8x28wPbJh7ph182dQtdwc03" rel="noopener noreferrer">
+            <span>Buy securely</span><strong>$12.99</strong>
+          </a>
+          <p class="secure-note"><span aria-hidden="true">●</span> One-time purchase. Lifetime updates.</p>
+        </article>
+
+        <article class="purchase-path purchase-path--recovery">
+          <div class="path-icon path-icon--key" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14.5 3a6.5 6.5 0 0 0-5.9 9.2L2 18.8V22h3.2l1.2-1.2 1.4 1.4 2.4-2.4-1.4-1.4 2.9-2.9A6.5 6.5 0 1 0 14.5 3Zm3 6.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/></svg>
+          </div>
+          <div class="path-copy">
+            <span class="path-kicker">Returning purchaser</span>
+            <h3>Recover your download</h3>
+            <p>Use the email from checkout. A private sign-in link confirms it belongs to you.</p>
+          </div>
+          <form class="verify-form" id="verify-form">
+            <label class="sr-only" for="purchase-email">Email used at checkout</label>
+            <div class="verify-row">
+              <input id="purchase-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="Email used at checkout" required />
+              <button type="submit">Recover</button>
+            </div>
+          </form>
+        </article>
       </div>
+
+      <div class="download-unlock" id="download-unlock" hidden>
+        <div><span class="unlock-check" aria-hidden="true">✓</span><p><strong>Purchase confirmed</strong><small>Your private link is ready for 10 minutes.</small></p></div>
+        <a class="download-button" id="download-button" href="#">Download APK</a>
+      </div>
+      <div class="access-status" id="access-status" role="status" aria-live="polite"></div>
     </section>
 
     <section class="showcase" aria-labelledby="showcase-title">
@@ -114,22 +141,24 @@
     const verifyForm = document.getElementById("verify-form");
     const accessStatus = document.getElementById("access-status");
     const downloadButton = document.getElementById("download-button");
+    const downloadUnlock = document.getElementById("download-unlock");
 
     function setAccessStatus(message, kind = "") {
       accessStatus.textContent = message;
       accessStatus.dataset.kind = kind;
     }
 
-    async function revealAndroidDownload(session) {
+    async function revealAndroidDownload({ session, sessionId } = {}) {
       setAccessStatus("Confirming your purchase…");
+      const headers = {
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+        "Content-Type": "application/json",
+      };
+      if (session?.access_token) headers.Authorization = `Bearer ${session.access_token}`;
       const response = await fetch(DOWNLOAD_FUNCTION, {
         method: "POST",
-        headers: {
-          apikey: SUPABASE_PUBLISHABLE_KEY,
-          Authorization: `Bearer ${session.access_token}`,
-          "Content-Type": "application/json",
-        },
-        body: "{}",
+        headers,
+        body: JSON.stringify(sessionId ? { sessionId } : {}),
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok || !result.downloadUrl) {
@@ -138,8 +167,9 @@
       }
 
       downloadButton.href = result.downloadUrl;
-      downloadButton.hidden = false;
-      setAccessStatus("Purchase confirmed. Your private download link is ready for 10 minutes.", "success");
+      downloadUnlock.hidden = false;
+      setAccessStatus("", "success");
+      document.getElementById("android-download").scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     verifyForm.addEventListener("submit", async (event) => {
@@ -158,15 +188,18 @@
     });
 
     supabaseClient.auth.getSession().then(({ data }) => {
-      if (data.session) revealAndroidDownload(data.session);
+      if (data.session) revealAndroidDownload({ session: data.session });
     });
     supabaseClient.auth.onAuthStateChange((event, session) => {
-      if ((event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session) revealAndroidDownload(session);
+      if ((event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session) revealAndroidDownload({ session });
     });
 
-    if (new URLSearchParams(window.location.search).get("purchase") === "complete") {
+    const pageParameters = new URLSearchParams(window.location.search);
+    const checkoutSessionId = pageParameters.get("session_id");
+    if (pageParameters.get("purchase") === "complete") {
       document.getElementById("android-download").scrollIntoView({ behavior: "smooth" });
-      setAccessStatus("Payment received. Verify the email used at checkout to reveal your download.");
+      if (checkoutSessionId) revealAndroidDownload({ sessionId: checkoutSessionId });
+      else setAccessStatus("Your payment was received, but the purchase reference is missing. Use recovery to continue.", "error");
     }
   </script>
 </body>
