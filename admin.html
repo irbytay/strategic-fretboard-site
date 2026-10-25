@@ -62,6 +62,12 @@
       status.dataset.kind = kind;
     }
 
+    function isAppleAdministratorSession(session) {
+      const provider = session?.user?.app_metadata?.provider;
+      const providers = session?.user?.app_metadata?.providers || [];
+      return provider === "apple" || providers.includes("apple");
+    }
+
     async function callAdmin(session, body) {
       const response = await fetch(ADMIN_FUNCTION, {
         method: "POST",
@@ -127,8 +133,13 @@
       }
     });
 
-    client.auth.getSession().then(({ data }) => {
-      if (data.session) showAdministrator(data.session);
+    client.auth.getSession().then(async ({ data }) => {
+      if (data.session && isAppleAdministratorSession(data.session)) {
+        showAdministrator(data.session);
+      } else if (data.session) {
+        await client.auth.signOut();
+        setStatus("");
+      }
     });
   </script>
 </body>
